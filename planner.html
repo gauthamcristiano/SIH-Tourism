@@ -1,0 +1,1513 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Plan Your Journey — Yatra</title>
+
+    <meta
+        name="description"
+        content="Create a personalized tourism journey with Yatra."
+    >
+
+    <style>
+        :root {
+            --bg: #f7f4ed;
+            --surface: #fffdf8;
+            --surface-soft: #f0ece2;
+            --text: #17221d;
+            --muted: #68736c;
+            --primary: #174f3b;
+            --primary-dark: #10392b;
+            --accent: #e3a72f;
+            --border: rgba(23, 34, 29, 0.12);
+            --shadow: 0 20px 60px rgba(23, 34, 29, 0.10);
+            --radius: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================== */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 17px 5%;
+            background: rgba(247, 244, 237, 0.94);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1240px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 1.2rem;
+            font-weight: 850;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-mark {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 650;
+            transition: 0.25s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================== */
+
+        .page-header {
+            max-width: 900px;
+            margin: auto;
+            padding: 75px 5% 40px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(23, 79, 59, 0.08);
+            color: var(--primary);
+            font-size: 0.76rem;
+            font-weight: 850;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.7rem, 6vw, 5rem);
+            line-height: 1;
+            letter-spacing: -0.065em;
+            margin-bottom: 18px;
+        }
+
+        .page-header h1 span {
+            color: var(--primary);
+        }
+
+        .page-header p {
+            max-width: 650px;
+            margin: auto;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           PLANNER
+        ========================== */
+
+        .planner-wrapper {
+            max-width: 1050px;
+            margin: auto;
+            padding: 20px 5% 100px;
+        }
+
+        .planner-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .progress {
+            padding: 22px 28px;
+            background: #f0ece2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-line {
+            height: 5px;
+            flex: 1;
+            background: rgba(23, 34, 29, 0.1);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 25%;
+            background: var(--primary);
+            border-radius: inherit;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            color: var(--muted);
+            font-size: 0.76rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .form-content {
+            padding: 45px;
+        }
+
+        .step {
+            display: none;
+            animation: stepIn 0.35s ease;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes stepIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-number {
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .step h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            line-height: 1.05;
+            letter-spacing: -0.05em;
+            margin-bottom: 9px;
+        }
+
+        .step-description {
+            color: var(--muted);
+            margin-bottom: 32px;
+            font-size: 0.92rem;
+        }
+
+        /* =========================
+           FORM
+        ========================== */
+
+        .field {
+            margin-bottom: 25px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.84rem;
+            font-weight: 800;
+            margin-bottom: 9px;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: #faf8f2;
+            color: var(--text);
+            border-radius: 15px;
+            padding: 14px 16px;
+            outline: none;
+            transition: 0.25s ease;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(23, 79, 59, 0.08);
+        }
+
+        /* =========================
+           CHOICE GRID
+        ========================== */
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px;
+        }
+
+        .choice {
+            position: relative;
+        }
+
+        .choice input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .choice label {
+            display: block;
+            padding: 18px 15px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #faf8f2;
+            cursor: pointer;
+            transition: 0.25s ease;
+            height: 100%;
+        }
+
+        .choice label:hover {
+            border-color: rgba(23, 79, 59, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .choice input:checked + label {
+            background: #eaf0eb;
+            border-color: var(--primary);
+            box-shadow: inset 0 0 0 1px var(--primary);
+        }
+
+        .choice-icon {
+            font-size: 1.4rem;
+            margin-bottom: 9px;
+        }
+
+        .choice-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .choice-description {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 0.72rem;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           BUDGET
+        ========================== */
+
+        .budget-display {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            padding: 20px;
+            border-radius: 18px;
+            background: #eaf0eb;
+            margin-bottom: 22px;
+        }
+
+        .budget-display strong {
+            font-size: 2.3rem;
+            color: var(--primary);
+            letter-spacing: -0.05em;
+        }
+
+        .budget-display span {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 0.72rem;
+        }
+
+        /* =========================
+           NAVIGATION BUTTONS
+        ========================== */
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 14px 21px;
+            border-radius: 999px;
+            border: none;
+            font-weight: 800;
+            transition: 0.25s ease;
+        }
+
+        .button-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .button-secondary {
+            background: transparent;
+            color: var(--muted);
+        }
+
+        .button-secondary:hover {
+            color: var(--primary);
+        }
+
+        /* =========================
+           SUMMARY
+        ========================== */
+
+        .summary {
+            margin-top: 25px;
+            display: none;
+            padding: 22px;
+            border-radius: 20px;
+            background: #f0ece2;
+        }
+
+        .summary.visible {
+            display: block;
+        }
+
+        .summary h3 {
+            margin-bottom: 13px;
+            font-size: 1rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .summary-item {
+            padding: 12px 14px;
+            background: rgba(255, 253, 248, 0.8);
+            border-radius: 13px;
+        }
+
+        .summary-item small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.68rem;
+            margin-bottom: 2px;
+        }
+
+        .summary-item strong {
+            font-size: 0.85rem;
+        }
+
+        /* =========================
+           INFO
+        ========================== */
+
+        .planner-note {
+            display: flex;
+            gap: 14px;
+            margin-top: 18px;
+            padding: 17px;
+            border-radius: 17px;
+            background: rgba(227, 167, 47, 0.09);
+            border: 1px solid rgba(227, 167, 47, 0.2);
+        }
+
+        .note-icon {
+            width: 33px;
+            height: 33px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: rgba(227, 167, 47, 0.18);
+        }
+
+        .planner-note p {
+            color: var(--muted);
+            font-size: 0.76rem;
+            line-height: 1.65;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            padding: 35px 5%;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            max-width: 1050px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-inner span {
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 760px) {
+
+            .page-header {
+                padding-top: 55px;
+            }
+
+            .form-content {
+                padding: 28px 20px;
+            }
+
+            .progress {
+                padding: 18px 20px;
+            }
+
+            .choice-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-actions {
+                margin-top: 30px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 470px) {
+
+            .choice-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+
+            .form-actions .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="nav-inner">
+
+            <a href="index.html" class="brand">
+                <span class="brand-mark">Y</span>
+                <span>Yatra</span>
+            </a>
+
+            <a href="index.html" class="back-link">
+                ← Back to home
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <section class="page-header">
+
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Journey planner
+        </div>
+
+        <h1>
+            Let's build your
+            <span>journey.</span>
+        </h1>
+
+        <p>
+            Tell us a little about how you want to travel.
+            Yatra will use your preferences to create a journey
+            designed around your needs.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         PLANNER
+    ========================== -->
+
+    <main class="planner-wrapper">
+
+        <div class="planner-card">
+
+            <!-- Progress -->
+
+            <div class="progress">
+
+                <div class="progress-line">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <div class="progress-text" id="progressText">
+                    Step 1 of 4
+                </div>
+
+            </div>
+
+
+            <div class="form-content">
+
+                <!-- =========================
+                     STEP 1
+                ========================== -->
+
+                <section class="step active" data-step="1">
+
+                    <div class="step-number">
+                        01 / DESTINATION
+                    </div>
+
+                    <h2>
+                        Where do you want to go?
+                    </h2>
+
+                    <p class="step-description">
+                        Choose the destination you want to explore.
+                    </p>
+
+                    <div class="field">
+
+                        <label for="destination">
+                            Destination
+                        </label>
+
+                        <input
+                            type="text"
+                            id="destination"
+                            placeholder="Example: Chennai, Tamil Nadu"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="travelers">
+                            Number of travelers
+                        </label>
+
+                        <select id="travelers">
+
+                            <option value="1">1 traveler</option>
+                            <option value="2" selected>2 travelers</option>
+                            <option value="3">3 travelers</option>
+                            <option value="4">4 travelers</option>
+                            <option value="5">5 travelers</option>
+                            <option value="6">6+ travelers</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="planner-note">
+
+                        <div class="note-icon">
+                            ✦
+                        </div>
+
+                        <p>
+                            You can change your preferences later.
+                            The final journey will adapt to your choices.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     STEP 2
+                ========================== -->
+
+                <section class="step" data-step="2">
+
+                    <div class="step-number">
+                        02 / TIME
+                    </div>
+
+                    <h2>
+                        How long are you staying?
+                    </h2>
+
+                    <p class="step-description">
+                        Your available time helps us create a realistic itinerary.
+                    </p>
+
+                    <div class="field">
+
+                        <label for="days">
+                            Duration
+                        </label>
+
+                        <select id="days">
+
+                            <option value="1">1 day</option>
+                            <option value="2" selected>2 days</option>
+                            <option value="3">3 days</option>
+                            <option value="4">4 days</option>
+                            <option value="5">5 days</option>
+                            <option value="6">6 days</option>
+                            <option value="7">7 days</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="field">
+
+                        <label for="startDate">
+                            Starting date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="startDate"
+                        >
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     STEP 3
+                ========================== -->
+
+                <section class="step" data-step="3">
+
+                    <div class="step-number">
+                        03 / BUDGET
+                    </div>
+
+                    <h2>
+                        What's your budget?
+                    </h2>
+
+                    <p class="step-description">
+                        Set a comfortable budget for your journey.
+                    </p>
+
+                    <div class="budget-display">
+
+                        <strong id="budgetValue">
+                            ₹5,000
+                        </strong>
+
+                        <span>
+                            estimated total
+                        </span>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        id="budget"
+                        min="1000"
+                        max="50000"
+                        step="500"
+                        value="5000"
+                    >
+
+                    <div class="range-labels">
+                        <span>₹1,000</span>
+                        <span>₹50,000</span>
+                    </div>
+
+                    <div class="planner-note">
+
+                        <div class="note-icon">
+                            ₹
+                        </div>
+
+                        <p>
+                            The budget is used to prioritize suitable places
+                            and experiences. It is a planning estimate, not a
+                            booking or payment.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     STEP 4
+                ========================== -->
+
+                <section class="step" data-step="4">
+
+                    <div class="step-number">
+                        04 / INTERESTS
+                    </div>
+
+                    <h2>
+                        What do you want to experience?
+                    </h2>
+
+                    <p class="step-description">
+                        Select the things that make a journey exciting for you.
+                    </p>
+
+                    <div class="choice-grid">
+
+                        <div class="choice">
+                            <input
+                                type="checkbox"
+                                id="history"
+                                value="History"
+                                class="interest"
+                            >
+
+                            <label for="history">
+
+                                <div class="choice-icon">🏛️</div>
+
+                                <span class="choice-title">
+                                    History
+                                </span>
+
+                                <span class="choice-description">
+                                    Heritage, monuments and stories
+                                </span>
+
+                            </label>
+                        </div>
+
+
+                        <div class="choice">
+                            <input
+                                type="checkbox"
+                                id="nature"
+                                value="Nature"
+                                class="interest"
+                            >
+
+                            <label for="nature">
+
+                                <div class="choice-icon">🌿</div>
+
+                                <span class="choice-title">
+                                    Nature
+                                </span>
+
+                                <span class="choice-description">
+                                    Landscapes, parks and outdoors
+                                </span>
+
+                            </label>
+                        </div>
+
+
+                        <div class="choice">
+                            <input
+                                type="checkbox"
+                                id="food"
+                                value="Food"
+                                class="interest"
+                            >
+
+                            <label for="food">
+
+                                <div class="choice-icon">🍲</div>
+
+                                <span class="choice-title">
+                                    Food
+                                </span>
+
+                                <span class="choice-description">
+                                    Local cuisine and food culture
+                                </span>
+
+                            </label>
+                        </div>
+
+
+                        <div class="choice">
+                            <input
+                                type="checkbox"
+                                id="culture"
+                                value="Culture"
+                                class="interest"
+                            >
+
+                            <label for="culture">
+
+                                <div class="choice-icon">🎭</div>
+
+                                <span class="choice-title">
+                                    Culture
+                                </span>
+
+                                <span class="choice-description">
+                                    Art, traditions and local life
+                                </span>
+
+                            </label>
+                        </div>
+
+
+                        <div class="choice">
+                            <input
+                                type="checkbox"
+                                id="adventure"
+                                value="Adventure"
+                                class="interest"
+                            >
+
+                            <label for="adventure">
+
+                                <div class="choice-icon">⛰️</div>
+
+                                <span class="choice-title">
+                                    Adventure
+                                </span>
+
+                                <span class="choice-description">
+                                    Outdoor and active experiences
+                                </span>
+
+                            </label>
+                        </div>
+
+
+                        <div class="choice">
+                            <input
+                                type="checkbox"
+                                id="relaxation"
+                                value="Relaxation"
+                                class="interest"
+                            >
+
+                            <label for="relaxation">
+
+                                <div class="choice-icon">🌊</div>
+
+                                <span class="choice-title">
+                                    Relaxation
+                                </span>
+
+                                <span class="choice-description">
+                                    Beaches, calm places and leisure
+                                </span>
+
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="summary" id="summary">
+
+                        <h3>
+                            Your journey profile
+                        </h3>
+
+                        <div class="summary-grid">
+
+                            <div class="summary-item">
+                                <small>Destination</small>
+                                <strong id="summaryDestination">—</strong>
+                            </div>
+
+                            <div class="summary-item">
+                                <small>Travelers</small>
+                                <strong id="summaryTravelers">—</strong>
+                            </div>
+
+                            <div class="summary-item">
+                                <small>Duration</small>
+                                <strong id="summaryDays">—</strong>
+                            </div>
+
+                            <div class="summary-item">
+                                <small>Budget</small>
+                                <strong id="summaryBudget">—</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================
+                     ACTIONS
+                ========================== -->
+
+                <div class="form-actions">
+
+                    <button
+                        class="button button-secondary"
+                        id="backButton"
+                        type="button"
+                        style="visibility: hidden;"
+                    >
+                        ← Back
+                    </button>
+
+                    <button
+                        class="button button-primary"
+                        id="nextButton"
+                        type="button"
+                    >
+                        Continue →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <span>
+                © 2026 Yatra. SIH Tourism Project.
+            </span>
+
+            <span>
+                Your journey, your way.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================
+           ELEMENTS
+        ========================== */
+
+        const steps = document.querySelectorAll(".step");
+
+        const nextButton =
+            document.getElementById("nextButton");
+
+        const backButton =
+            document.getElementById("backButton");
+
+        const progressFill =
+            document.getElementById("progressFill");
+
+        const progressText =
+            document.getElementById("progressText");
+
+        const budgetInput =
+            document.getElementById("budget");
+
+        const budgetValue =
+            document.getElementById("budgetValue");
+
+        const summary =
+            document.getElementById("summary");
+
+        let currentStep = 1;
+
+        const totalSteps = 4;
+
+
+        /* =========================
+           JOURNEY DATA
+        ========================== */
+
+        const journeyData = {
+
+            destination: "",
+            travelers: 2,
+            days: 2,
+            startDate: "",
+            budget: 5000,
+            interests: []
+
+        };
+
+
+        /* =========================
+           BUDGET DISPLAY
+        ========================== */
+
+        function formatCurrency(value) {
+
+            return new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: "INR",
+                maximumFractionDigits: 0
+            }).format(value);
+
+        }
+
+
+        budgetInput.addEventListener("input", () => {
+
+            journeyData.budget =
+                Number(budgetInput.value);
+
+            budgetValue.textContent =
+                formatCurrency(journeyData.budget);
+
+        });
+
+
+        /* =========================
+           UPDATE PROGRESS
+        ========================== */
+
+        function updateProgress() {
+
+            const percentage =
+                (currentStep / totalSteps) * 100;
+
+            progressFill.style.width =
+                `${percentage}%`;
+
+            progressText.textContent =
+                `Step ${currentStep} of ${totalSteps}`;
+
+        }
+
+
+        /* =========================
+           SHOW STEP
+        ========================== */
+
+        function showStep(stepNumber) {
+
+            steps.forEach((step) => {
+
+                step.classList.remove("active");
+
+            });
+
+            const selectedStep =
+                document.querySelector(
+                    `.step[data-step="${stepNumber}"]`
+                );
+
+            if (selectedStep) {
+                selectedStep.classList.add("active");
+            }
+
+            currentStep = stepNumber;
+
+            updateProgress();
+
+            backButton.style.visibility =
+                currentStep === 1
+                    ? "hidden"
+                    : "visible";
+
+            nextButton.textContent =
+                currentStep === totalSteps
+                    ? "Generate journey →"
+                    : "Continue →";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /* =========================
+           VALIDATION
+        ========================== */
+
+        function validateCurrentStep() {
+
+            if (currentStep === 1) {
+
+                const destination =
+                    document
+                        .getElementById("destination")
+                        .value
+                        .trim();
+
+                if (!destination) {
+
+                    alert(
+                        "Please enter a destination before continuing."
+                    );
+
+                    document
+                        .getElementById("destination")
+                        .focus();
+
+                    return false;
+
+                }
+
+                journeyData.destination =
+                    destination;
+
+                journeyData.travelers =
+                    Number(
+                        document
+                            .getElementById("travelers")
+                            .value
+                    );
+
+            }
+
+
+            if (currentStep === 2) {
+
+                journeyData.days =
+                    Number(
+                        document
+                            .getElementById("days")
+                            .value
+                    );
+
+                journeyData.startDate =
+                    document
+                        .getElementById("startDate")
+                        .value;
+
+            }
+
+
+            if (currentStep === 3) {
+
+                journeyData.budget =
+                    Number(
+                        budgetInput.value
+                    );
+
+            }
+
+
+            if (currentStep === 4) {
+
+                journeyData.interests =
+                    Array.from(
+                        document.querySelectorAll(
+                            ".interest:checked"
+                        )
+                    ).map(
+                        (checkbox) => checkbox.value
+                    );
+
+                if (
+                    journeyData.interests.length === 0
+                ) {
+
+                    alert(
+                        "Please select at least one interest."
+                    );
+
+                    return false;
+
+                }
+
+            }
+
+            return true;
+
+        }
+
+
+        /* =========================
+           SUMMARY
+        ========================== */
+
+        function updateSummary() {
+
+            document.getElementById(
+                "summaryDestination"
+            ).textContent =
+                journeyData.destination;
+
+            document.getElementById(
+                "summaryTravelers"
+            ).textContent =
+                `${journeyData.travelers} ${
+                    journeyData.travelers === 1
+                        ? "traveler"
+                        : "travelers"
+                }`;
+
+            document.getElementById(
+                "summaryDays"
+            ).textContent =
+                `${journeyData.days} ${
+                    journeyData.days === 1
+                        ? "day"
+                        : "days"
+                }`;
+
+            document.getElementById(
+                "summaryBudget"
+            ).textContent =
+                formatCurrency(
+                    journeyData.budget
+                );
+
+            summary.classList.add("visible");
+
+        }
+
+
+        /* =========================
+           GENERATE JOURNEY
+        ========================== */
+
+        function generateJourney() {
+
+            journeyData.interests =
+                Array.from(
+                    document.querySelectorAll(
+                        ".interest:checked"
+                    )
+                ).map(
+                    (checkbox) => checkbox.value
+                );
+
+            localStorage.setItem(
+                "yatraJourney",
+                JSON.stringify(journeyData)
+            );
+
+            /*
+             * The next page of our project will read
+             * this saved journey profile and generate
+             * the actual itinerary.
+             */
+
+            window.location.href =
+                "itinerary.html";
+
+        }
+
+
+        /* =========================
+           NEXT BUTTON
+        ========================== */
+
+        nextButton.addEventListener("click", () => {
+
+            if (!validateCurrentStep()) {
+                return;
+            }
+
+            if (currentStep < totalSteps) {
+
+                if (currentStep === 3) {
+                    updateSummary();
+                }
+
+                showStep(currentStep + 1);
+
+            } else {
+
+                generateJourney();
+
+            }
+
+        });
+
+
+        /* =========================
+           BACK BUTTON
+        ========================== */
+
+        backButton.addEventListener("click", () => {
+
+            if (currentStep > 1) {
+
+                showStep(currentStep - 1);
+
+            }
+
+        });
+
+
+        /* =========================
+           DEFAULT DATE
+        ========================== */
+
+        const startDateInput =
+            document.getElementById("startDate");
+
+        const today =
+            new Date();
+
+        const year =
+            today.getFullYear();
+
+        const month =
+            String(today.getMonth() + 1)
+                .padStart(2, "0");
+
+        const day =
+            String(today.getDate())
+                .padStart(2, "0");
+
+        const todayString =
+            `${year}-${month}-${day}`;
+
+        startDateInput.min =
+            todayString;
+
+        startDateInput.value =
+            todayString;
+
+        journeyData.startDate =
+            todayString;
+
+
+        /* =========================
+           INITIAL STATE
+        ========================== */
+
+        budgetValue.textContent =
+            formatCurrency(
+                journeyData.budget
+            );
+
+        updateProgress();
+
+    </script>
+
+</body>
+</html>
+```
