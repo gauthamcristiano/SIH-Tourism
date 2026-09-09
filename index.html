@@ -4,27 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Yatra — Intelligent Tourism</title>
+    <title>Yatra — Travel With Meaning</title>
 
     <meta
         name="description"
-        content="Yatra is an intelligent tourism platform that helps travelers discover destinations and create personalized journeys."
+        content="Yatra helps travellers discover places, plan personalized journeys and experience destinations differently."
     >
 
     <style>
+
+        /* =========================================================
+           ROOT
+        ========================================================= */
+
         :root {
             --bg: #f7f4ed;
             --surface: #fffdf8;
+            --surface-soft: #eee9de;
+
             --text: #17221d;
-            --muted: #66716a;
+            --muted: #68736c;
+
             --primary: #174f3b;
-            --primary-dark: #10392b;
+            --primary-dark: #0e3829;
+
             --accent: #e3a72f;
-            --accent-light: #f6d98d;
+
             --border: rgba(23, 34, 29, 0.12);
-            --shadow: 0 20px 60px rgba(23, 34, 29, 0.10);
-            --radius: 24px;
+
+            --shadow:
+                0 25px 70px rgba(23, 34, 29, 0.11);
         }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
 
         * {
             margin: 0;
@@ -45,9 +60,12 @@
                 BlinkMacSystemFont,
                 "Segoe UI",
                 sans-serif;
+
             background: var(--bg);
             color: var(--text);
+
             line-height: 1.6;
+
             overflow-x: hidden;
         }
 
@@ -57,8 +75,7 @@
         }
 
         button,
-        input,
-        select {
+        input {
             font: inherit;
         }
 
@@ -66,746 +83,1432 @@
             cursor: pointer;
         }
 
-        /* =========================
+
+        /* =========================================================
            NAVBAR
-        ========================= */
+        ========================================================= */
 
         .navbar {
             position: fixed;
+
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
+
             z-index: 1000;
+
             padding: 18px 5%;
-            transition: 0.3s ease;
+
+            transition:
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                padding 0.3s ease;
         }
 
         .navbar.scrolled {
             background: rgba(247, 244, 237, 0.92);
+
             backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+
+            border-bottom:
+                1px solid var(--border);
+
+            box-shadow:
+                0 10px 30px rgba(23, 34, 29, 0.05);
+
+            padding-top: 13px;
+            padding-bottom: 13px;
         }
 
         .nav-inner {
-            max-width: 1240px;
+            max-width: 1180px;
+
             margin: auto;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
+            gap: 30px;
         }
 
         .brand {
             display: flex;
+
             align-items: center;
-            gap: 11px;
-            font-weight: 800;
-            font-size: 1.25rem;
-            letter-spacing: -0.03em;
+
+            gap: 10px;
+
+            font-size: 1.18rem;
+
+            font-weight: 900;
+
+            letter-spacing: -0.04em;
         }
 
         .brand-mark {
             width: 38px;
             height: 38px;
+
             display: grid;
+
             place-items: center;
+
             border-radius: 12px;
+
             background: var(--primary);
+
             color: white;
+
             font-size: 1rem;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 8px 20px rgba(23, 79, 59, 0.2);
         }
 
         .nav-links {
             display: flex;
+
             align-items: center;
-            gap: 32px;
-            color: #48534d;
-            font-size: 0.94rem;
+
+            gap: 27px;
         }
 
-        .nav-links a {
+        .nav-link {
             position: relative;
-            transition: 0.25s ease;
+
+            color: var(--muted);
+
+            font-size: 0.79rem;
+
+            font-weight: 750;
+
+            transition: color 0.2s ease;
         }
 
-        .nav-links a::after {
+        .nav-link::after {
             content: "";
+
             position: absolute;
+
             left: 0;
             bottom: -7px;
+
             width: 0;
             height: 2px;
-            background: var(--accent);
-            transition: 0.25s ease;
+
+            background: var(--primary);
+
+            border-radius: 10px;
+
+            transition: width 0.25s ease;
         }
 
-        .nav-links a:hover {
+        .nav-link:hover {
             color: var(--primary);
         }
 
-        .nav-links a:hover::after {
+        .nav-link:hover::after,
+        .nav-link.active::after {
             width: 100%;
         }
 
-        .nav-cta {
-            padding: 11px 19px;
-            border-radius: 999px;
-            background: var(--primary);
-            color: white !important;
-            font-weight: 700;
-            transition: 0.25s ease;
+        .nav-link.active {
+            color: var(--primary);
         }
 
-        .nav-cta:hover {
+        .nav-button {
+            border: none;
+
+            padding: 11px 17px;
+
+            border-radius: 999px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 0.76rem;
+
+            font-weight: 850;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .nav-button:hover {
             background: var(--primary-dark);
+
             transform: translateY(-2px);
         }
 
-        .nav-cta::after {
-            display: none;
-        }
 
-        /* =========================
+        /* =========================================================
            HERO
-        ========================= */
+        ========================================================= */
 
         .hero {
-            min-height: 100vh;
-            padding: 150px 5% 80px;
-            display: flex;
-            align-items: center;
             position: relative;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
             overflow: hidden;
-        }
 
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 650px;
-            height: 650px;
-            right: -280px;
-            top: -200px;
-            border-radius: 50%;
-            background: rgba(227, 167, 47, 0.12);
-            filter: blur(2px);
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-            width: 420px;
-            height: 420px;
-            left: -180px;
-            bottom: -200px;
-            border-radius: 50%;
-            background: rgba(23, 79, 59, 0.08);
+            padding:
+                130px 5%
+                80px;
         }
 
         .hero-inner {
-            max-width: 1240px;
             width: 100%;
+
+            max-width: 1180px;
+
             margin: auto;
+
             display: grid;
-            grid-template-columns: 1.05fr 0.95fr;
-            gap: 70px;
+
+            grid-template-columns:
+                minmax(0, 1.05fr)
+                minmax(340px, 0.95fr);
+
             align-items: center;
+
+            gap: 60px;
+
             position: relative;
+
             z-index: 2;
+        }
+
+        .hero-copy {
+            max-width: 690px;
         }
 
         .eyebrow {
             display: inline-flex;
+
             align-items: center;
+
             gap: 9px;
+
             padding: 7px 12px;
+
             border-radius: 999px;
-            background: rgba(23, 79, 59, 0.08);
+
+            background:
+                rgba(23, 79, 59, 0.08);
+
             color: var(--primary);
-            font-size: 0.78rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
+
+            font-size: 0.68rem;
+
+            font-weight: 850;
+
+            letter-spacing: 0.09em;
+
             text-transform: uppercase;
+
             margin-bottom: 23px;
         }
 
         .eyebrow-dot {
             width: 7px;
             height: 7px;
+
             border-radius: 50%;
+
             background: var(--accent);
-            box-shadow: 0 0 0 5px rgba(227, 167, 47, 0.14);
+
+            box-shadow:
+                0 0 0 5px
+                rgba(227, 167, 47, 0.13);
         }
 
         .hero h1 {
-            max-width: 760px;
-            font-size: clamp(3.1rem, 6vw, 5.9rem);
-            line-height: 0.98;
-            letter-spacing: -0.065em;
-            font-weight: 850;
+            font-size:
+                clamp(
+                    3.5rem,
+                    7.4vw,
+                    7.4rem
+                );
+
+            line-height: 0.88;
+
+            letter-spacing: -0.085em;
+
             margin-bottom: 28px;
         }
 
         .hero h1 span {
+            display: block;
+
             color: var(--primary);
         }
 
         .hero-description {
-            max-width: 610px;
+            max-width: 590px;
+
             color: var(--muted);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 36px;
+
+            font-size: 0.96rem;
+
+            line-height: 1.85;
+
+            margin-bottom: 30px;
         }
 
         .hero-actions {
             display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
 
-        .primary-button,
-        .secondary-button {
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 23px;
-            border-radius: 999px;
-            font-weight: 750;
-            border: none;
-            transition: 0.3s ease;
+
+            gap: 11px;
+
+            flex-wrap: wrap;
         }
 
         .primary-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            border: none;
+
+            border-radius: 999px;
+
+            padding: 14px 21px;
+
             background: var(--primary);
+
             color: white;
-            box-shadow: 0 14px 30px rgba(23, 79, 59, 0.20);
+
+            font-size: 0.78rem;
+
+            font-weight: 850;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
         }
 
         .primary-button:hover {
             background: var(--primary-dark);
+
             transform: translateY(-3px);
-            box-shadow: 0 18px 35px rgba(23, 79, 59, 0.25);
+
+            box-shadow:
+                0 12px 28px
+                rgba(23, 79, 59, 0.22);
         }
 
         .secondary-button {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid var(--border);
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 13px 19px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,0.45);
+
             color: var(--text);
+
+            font-size: 0.78rem;
+
+            font-weight: 800;
+
+            transition:
+                border-color 0.2s ease,
+                transform 0.2s ease;
         }
 
         .secondary-button:hover {
-            transform: translateY(-3px);
-            background: white;
+            border-color: var(--primary);
+
+            color: var(--primary);
+
+            transform: translateY(-2px);
         }
 
-        /* =========================
+
+        /* =========================================================
            HERO VISUAL
-        ========================= */
+        ========================================================= */
 
         .hero-visual {
-            min-height: 530px;
             position: relative;
+
+            min-height: 540px;
+
             display: flex;
+
+            align-items: center;
+
             justify-content: center;
+        }
+
+        .hero-orbit {
+            position: absolute;
+
+            width: 430px;
+            height: 430px;
+
+            border-radius: 50%;
+
+            border:
+                1px dashed
+                rgba(23, 79, 59, 0.18);
+
+            animation:
+                rotateOrbit 25s linear infinite;
+        }
+
+        @keyframes rotateOrbit {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-card {
+            position: relative;
+
+            width: min(100%, 410px);
+
+            min-height: 485px;
+
+            padding: 24px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    150deg,
+                    #dce5d9,
+                    #afc5b1 55%,
+                    #789883
+                );
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+
+            transform:
+                rotate(2deg);
+        }
+
+        .hero-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.18);
+
+            top: -100px;
+            right: -80px;
+        }
+
+        .hero-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 190px;
+            height: 190px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.35);
+
+            bottom: -70px;
+            left: -50px;
+        }
+
+        .hero-card-top {
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            justify-content: space-between;
+
             align-items: center;
         }
 
-        .journey-card {
-            width: min(440px, 100%);
-            min-height: 500px;
-            background: var(--surface);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            border-radius: 34px;
-            box-shadow: var(--shadow);
-            padding: 20px;
-            position: relative;
-            transform: rotate(2deg);
-            animation: floatCard 6s ease-in-out infinite;
-        }
+        .hero-card-label {
+            padding: 7px 10px;
 
-        @keyframes floatCard {
-            0%,
-            100% {
-                transform: rotate(2deg) translateY(0);
-            }
-
-            50% {
-                transform: rotate(2deg) translateY(-10px);
-            }
-        }
-
-        .card-image {
-            height: 255px;
-            border-radius: 25px;
-            position: relative;
-            overflow: hidden;
-            background:
-                linear-gradient(
-                    145deg,
-                    #285c4b 0%,
-                    #6c9275 44%,
-                    #d8b66b 45%,
-                    #f1d99d 100%
-                );
-        }
-
-        .card-image::before {
-            content: "";
-            position: absolute;
-            width: 240px;
-            height: 240px;
-            border-radius: 50%;
-            right: -55px;
-            top: -90px;
-            background: rgba(255, 243, 191, 0.75);
-        }
-
-        .mountain {
-            position: absolute;
-            bottom: 0;
-            width: 0;
-            height: 0;
-            border-left: 120px solid transparent;
-            border-right: 120px solid transparent;
-            border-bottom: 150px solid #315846;
-        }
-
-        .mountain.one {
-            left: -40px;
-        }
-
-        .mountain.two {
-            left: 120px;
-            border-left-width: 160px;
-            border-right-width: 160px;
-            border-bottom-color: #426c57;
-        }
-
-        .sun {
-            position: absolute;
-            width: 82px;
-            height: 82px;
-            border-radius: 50%;
-            background: #f4c45f;
-            top: 42px;
-            left: 46px;
-        }
-
-        .location-badge {
-            position: absolute;
-            top: 18px;
-            left: 18px;
-            padding: 8px 13px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(10px);
-            font-size: 0.75rem;
+
+            background:
+                rgba(255,255,255,0.72);
+
+            color: var(--primary);
+
+            font-size: 0.62rem;
+
+            font-weight: 850;
+
+            letter-spacing: 0.07em;
+        }
+
+        .hero-card-number {
+            color:
+                rgba(255,255,255,0.85);
+
+            font-size: 0.7rem;
+
             font-weight: 800;
         }
 
-        .journey-content {
-            padding: 23px 5px 4px;
+        .hero-landscape {
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 10rem;
+
+            opacity: 0.36;
+
+            filter:
+                saturate(0.7);
         }
 
-        .journey-label {
-            color: var(--muted);
-            font-size: 0.76rem;
-            font-weight: 800;
+        .hero-card-content {
+            position: absolute;
+
+            left: 25px;
+            right: 25px;
+            bottom: 25px;
+
+            z-index: 3;
+
+            padding: 24px;
+
+            border-radius: 21px;
+
+            background:
+                rgba(255,255,255,0.78);
+
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-card-content small {
+            color: var(--accent);
+
+            font-size: 0.64rem;
+
+            font-weight: 900;
+
             letter-spacing: 0.08em;
+
             text-transform: uppercase;
         }
 
-        .journey-content h3 {
-            font-size: 1.65rem;
-            margin: 5px 0 9px;
-            letter-spacing: -0.035em;
+        .hero-card-content h3 {
+            font-size: 2rem;
+
+            letter-spacing: -0.06em;
+
+            line-height: 1;
+
+            margin:
+                5px 0
+                8px;
         }
 
-        .journey-content p {
+        .hero-card-content p {
             color: var(--muted);
-            font-size: 0.91rem;
+
+            font-size: 0.72rem;
+
+            line-height: 1.65;
         }
 
-        .journey-meta {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 9px;
+        .floating-note {
+            position: absolute;
+
+            z-index: 5;
+
+            padding: 13px 15px;
+
+            border:
+                1px solid
+                rgba(23,34,29,0.1);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,0.9);
+
+            backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 15px 40px
+                rgba(23,34,29,0.1);
+        }
+
+        .floating-note strong {
+            display: block;
+
+            font-size: 0.78rem;
+
+            margin-bottom: 2px;
+        }
+
+        .floating-note span {
+            color: var(--muted);
+
+            font-size: 0.64rem;
+        }
+
+        .note-one {
+            left: 0;
+            top: 85px;
+        }
+
+        .note-two {
+            right: -10px;
+            bottom: 85px;
+        }
+
+
+        /* =========================================================
+           MARQUEE
+        ========================================================= */
+
+        .marquee {
+            overflow: hidden;
+
+            border-top:
+                1px solid var(--border);
+
+            border-bottom:
+                1px solid var(--border);
+
+            background:
+                var(--surface-soft);
+
+            padding: 17px 0;
+        }
+
+        .marquee-track {
+            width: max-content;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 30px;
+
+            animation:
+                marqueeMove 28s linear infinite;
+        }
+
+        .marquee-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 30px;
+
+            color: var(--muted);
+
+            font-size: 0.67rem;
+
+            font-weight: 850;
+
+            letter-spacing: 0.08em;
+
+            text-transform: uppercase;
+        }
+
+        .marquee-dot {
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: var(--accent);
+        }
+
+        @keyframes marqueeMove {
+
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+
+        }
+
+
+        /* =========================================================
+           INTRO
+        ========================================================= */
+
+        .section {
+            max-width: 1180px;
+
+            margin: auto;
+
+            padding:
+                105px 5%;
+        }
+
+        .section-label {
+            color: var(--accent);
+
+            font-size: 0.67rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.1em;
+
+            text-transform: uppercase;
+
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            max-width: 760px;
+
+            font-size:
+                clamp(
+                    2.3rem,
+                    5vw,
+                    4.8rem
+                );
+
+            line-height: 0.98;
+
+            letter-spacing: -0.075em;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        .section-description {
+            max-width: 630px;
+
+            color: var(--muted);
+
+            font-size: 0.88rem;
+
+            line-height: 1.85;
+
             margin-top: 20px;
         }
 
-        .meta-box {
-            padding: 11px;
-            border-radius: 15px;
-            background: #f4f1e9;
-        }
 
-        .meta-box small {
-            display: block;
-            color: var(--muted);
-            font-size: 0.68rem;
-            margin-bottom: 3px;
-        }
+        /* =========================================================
+           HOW IT WORKS
+        ========================================================= */
 
-        .meta-box strong {
-            font-size: 0.85rem;
-        }
-
-        .floating-chip {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-            background: rgba(255, 253, 248, 0.94);
-            border: 1px solid rgba(23, 34, 29, 0.08);
-            border-radius: 17px;
-            box-shadow: 0 18px 40px rgba(23, 34, 29, 0.13);
-            font-size: 0.78rem;
-            font-weight: 750;
-            z-index: 3;
-        }
-
-        .floating-chip span {
-            width: 30px;
-            height: 30px;
-            border-radius: 10px;
+        .steps {
             display: grid;
-            place-items: center;
-            background: #edf3ee;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 17px;
+
+            margin-top: 55px;
         }
 
-        .chip-one {
-            left: -10px;
-            top: 105px;
-        }
-
-        .chip-two {
-            right: -25px;
-            bottom: 120px;
-        }
-
-        /* =========================
-           STATS
-        ========================= */
-
-        .stats {
-            padding: 30px 5% 90px;
-        }
-
-        .stats-inner {
-            max-width: 1100px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            background: var(--primary);
-            color: white;
-            border-radius: 27px;
-            overflow: hidden;
-        }
-
-        .stat {
-            padding: 30px;
-            text-align: center;
-            border-right: 1px solid rgba(255, 255, 255, 0.14);
-        }
-
-        .stat:last-child {
-            border-right: none;
-        }
-
-        .stat strong {
-            display: block;
-            font-size: 1.65rem;
-            letter-spacing: -0.03em;
-        }
-
-        .stat span {
-            display: block;
-            margin-top: 4px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.86rem;
-        }
-
-        /* =========================
-           INTRO
-        ========================= */
-
-        .section {
-            padding: 100px 5%;
-        }
-
-        .section-inner {
-            max-width: 1240px;
-            margin: auto;
-        }
-
-        .section-heading {
-            max-width: 720px;
-            margin-bottom: 52px;
-        }
-
-        .section-heading .eyebrow {
-            margin-bottom: 17px;
-        }
-
-        .section-heading h2 {
-            font-size: clamp(2.3rem, 4vw, 4rem);
-            line-height: 1.04;
-            letter-spacing: -0.055em;
-            margin-bottom: 17px;
-        }
-
-        .section-heading p {
-            color: var(--muted);
-            font-size: 1rem;
-            line-height: 1.8;
-        }
-
-        /* =========================
-           FEATURES
-        ========================= */
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .feature-card {
-            min-height: 300px;
-            padding: 30px;
-            border-radius: var(--radius);
-            background: var(--surface);
-            border: 1px solid var(--border);
-            transition: 0.35s ease;
+        .step {
             position: relative;
-            overflow: hidden;
+
+            padding: 27px;
+
+            min-height: 270px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 24px;
+
+            background:
+                var(--surface);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
-        .feature-card:hover {
-            transform: translateY(-7px);
+        .step:hover {
+            transform: translateY(-6px);
+
             box-shadow: var(--shadow);
-            border-color: rgba(23, 79, 59, 0.18);
         }
 
-        .feature-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
+        .step-number {
+            width: 42px;
+            height: 42px;
+
             display: grid;
+
             place-items: center;
-            background: #eaf0eb;
-            font-size: 1.3rem;
-            margin-bottom: 26px;
+
+            border-radius: 13px;
+
+            background:
+                var(--surface-soft);
+
+            color: var(--primary);
+
+            font-size: 0.78rem;
+
+            font-weight: 900;
+
+            margin-bottom: 50px;
         }
 
-        .feature-card h3 {
+        .step h3 {
             font-size: 1.3rem;
-            letter-spacing: -0.025em;
-            margin-bottom: 11px;
+
+            letter-spacing: -0.04em;
+
+            margin-bottom: 8px;
         }
 
-        .feature-card p {
+        .step p {
             color: var(--muted);
-            font-size: 0.91rem;
+
+            font-size: 0.74rem;
+
             line-height: 1.75;
         }
 
-        .feature-number {
-            position: absolute;
-            right: 23px;
-            top: 18px;
-            color: rgba(23, 34, 29, 0.07);
-            font-size: 4.5rem;
-            font-weight: 900;
-            letter-spacing: -0.08em;
+
+        /* =========================================================
+           FEATURED EXPERIENCE
+        ========================================================= */
+
+        .experience-section {
+            padding:
+                40px 5%
+                110px;
         }
 
-        /* =========================
-           HOW IT WORKS
-        ========================= */
+        .experience-container {
+            max-width: 1180px;
 
-        .process-section {
-            background: #eee9de;
-        }
-
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
-        }
-
-        .process-card {
-            padding: 28px 24px;
-            background: rgba(255, 253, 248, 0.72);
-            border: 1px solid rgba(23, 34, 29, 0.08);
-            border-radius: 22px;
-        }
-
-        .process-step {
-            color: var(--accent);
-            font-size: 0.75rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            margin-bottom: 38px;
-        }
-
-        .process-card h3 {
-            margin-bottom: 9px;
-            font-size: 1.15rem;
-        }
-
-        .process-card p {
-            color: var(--muted);
-            font-size: 0.88rem;
-            line-height: 1.7;
-        }
-
-        /* =========================
-           CTA
-        ========================= */
-
-        .cta {
-            padding: 100px 5%;
-        }
-
-        .cta-card {
-            max-width: 1240px;
             margin: auto;
-            padding: 75px 70px;
-            border-radius: 35px;
-            background: var(--primary);
-            color: white;
+        }
+
+        .experience-card {
             position: relative;
+
+            min-height: 490px;
+
             overflow: hidden;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    125deg,
+                    #153c2e,
+                    #28634e 55%,
+                    #658675
+                );
+
+            color: white;
+
+            box-shadow: var(--shadow);
         }
 
-        .cta-card::after {
+        .experience-card::before {
             content: "";
+
             position: absolute;
-            width: 420px;
-            height: 420px;
+
+            width: 520px;
+            height: 520px;
+
             border-radius: 50%;
-            right: -130px;
-            top: -190px;
-            background: rgba(227, 167, 47, 0.18);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.18);
+
+            right: -150px;
+            top: -170px;
         }
 
-        .cta-card h2 {
-            max-width: 700px;
-            font-size: clamp(2.5rem, 5vw, 4.6rem);
-            line-height: 1;
-            letter-spacing: -0.06em;
-            margin-bottom: 20px;
+        .experience-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            right: 80px;
+            bottom: -130px;
+        }
+
+        .experience-content {
             position: relative;
-            z-index: 2;
+
+            z-index: 3;
+
+            max-width: 650px;
+
+            padding: 65px;
         }
 
-        .cta-card p {
-            max-width: 610px;
-            color: rgba(255, 255, 255, 0.72);
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 2;
+        .experience-content .section-label {
+            color: #e8c264;
         }
 
-        .cta-card .primary-button {
+        .experience-content h2 {
+            font-size:
+                clamp(
+                    2.5rem,
+                    5vw,
+                    5rem
+                );
+
+            line-height: 0.93;
+
+            letter-spacing: -0.07em;
+
+            margin-bottom: 21px;
+        }
+
+        .experience-content p {
+            max-width: 560px;
+
+            color:
+                rgba(255,255,255,0.72);
+
+            font-size: 0.84rem;
+
+            line-height: 1.8;
+
+            margin-bottom: 28px;
+        }
+
+        .experience-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            border: none;
+
+            border-radius: 999px;
+
+            padding: 13px 19px;
+
             background: white;
+
             color: var(--primary);
+
+            font-size: 0.76rem;
+
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           DESTINATIONS
+        ========================================================= */
+
+        .destination-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-end;
+
+            gap: 30px;
+
+            margin-bottom: 42px;
+        }
+
+        .destination-header a {
+            color: var(--primary);
+
+            font-size: 0.75rem;
+
+            font-weight: 850;
+        }
+
+        .destination-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.35fr
+                1fr
+                1fr;
+
+            grid-template-rows:
+                240px
+                240px;
+
+            gap: 15px;
+        }
+
+        .destination {
             position: relative;
-            z-index: 2;
+
+            overflow: hidden;
+
+            border-radius: 23px;
+
+            background:
+                #c9d4c8;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.3s ease;
         }
 
-        .cta-card .primary-button:hover {
-            background: #f7f4ed;
+        .destination:hover {
+            transform: translateY(-5px);
         }
 
-        /* =========================
+        .destination-large {
+            grid-row:
+                span 2;
+        }
+
+        .destination-visual {
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 7rem;
+
+            opacity: 0.4;
+
+            transition:
+                transform 0.4s ease;
+        }
+
+        .destination:hover
+        .destination-visual {
+            transform:
+                scale(1.08);
+        }
+
+        .destination:nth-child(2) {
+            background:
+                #d8d0b9;
+        }
+
+        .destination:nth-child(3) {
+            background:
+                #c8d9d3;
+        }
+
+        .destination:nth-child(4) {
+            background:
+                #ddd2c1;
+        }
+
+        .destination:nth-child(5) {
+            background:
+                #c8d1bf;
+        }
+
+        .destination-info {
+            position: absolute;
+
+            left: 17px;
+            right: 17px;
+            bottom: 17px;
+
+            padding: 16px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255,255,255,0.78);
+
+            backdrop-filter:
+                blur(12px);
+        }
+
+        .destination-info small {
+            color: var(--accent);
+
+            font-size: 0.59rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.08em;
+
+            text-transform: uppercase;
+        }
+
+        .destination-info h3 {
+            font-size: 1.2rem;
+
+            line-height: 1;
+
+            letter-spacing: -0.04em;
+
+            margin-top: 3px;
+        }
+
+
+        /* =========================================================
+           STATS
+        ========================================================= */
+
+        .stats-section {
+            background:
+                var(--primary);
+
+            color: white;
+
+            padding:
+                75px 5%;
+        }
+
+        .stats {
+            max-width: 1180px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 30px;
+        }
+
+        .stat {
+            text-align: center;
+
+            padding: 10px;
+        }
+
+        .stat-number {
+            font-size:
+                clamp(
+                    2.5rem,
+                    5vw,
+                    4rem
+                );
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            letter-spacing: -0.07em;
+
+            margin-bottom: 9px;
+        }
+
+        .stat-label {
+            color:
+                rgba(255,255,255,0.64);
+
+            font-size: 0.68rem;
+
+            font-weight: 750;
+
+            letter-spacing: 0.05em;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           FINAL CTA
+        ========================================================= */
+
+        .final-section {
+            max-width: 1180px;
+
+            margin: auto;
+
+            padding:
+                115px 5%;
+        }
+
+        .final-card {
+            text-align: center;
+
+            padding:
+                70px 30px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 30px;
+
+            background:
+                var(--surface-soft);
+        }
+
+        .final-card h2 {
+            max-width: 750px;
+
+            margin:
+                0 auto 18px;
+
+            font-size:
+                clamp(
+                    2.5rem,
+                    6vw,
+                    5.4rem
+                );
+
+            line-height: 0.94;
+
+            letter-spacing: -0.075em;
+        }
+
+        .final-card h2 span {
+            color: var(--primary);
+        }
+
+        .final-card p {
+            max-width: 550px;
+
+            margin:
+                0 auto 27px;
+
+            color: var(--muted);
+
+            font-size: 0.82rem;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================================
            FOOTER
-        ========================= */
+        ========================================================= */
 
         footer {
-            padding: 35px 5%;
-            border-top: 1px solid var(--border);
+            border-top:
+                1px solid var(--border);
+
+            padding:
+                38px 5%;
         }
 
         .footer-inner {
-            max-width: 1240px;
+            max-width: 1180px;
+
             margin: auto;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
             gap: 20px;
+        }
+
+        .footer-brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 0.86rem;
+
+            font-weight: 900;
+        }
+
+        .footer-mark {
+            width: 29px;
+            height: 29px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 9px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 0.7rem;
         }
 
         .footer-copy {
             color: var(--muted);
-            font-size: 0.82rem;
+
+            font-size: 0.67rem;
         }
 
-        .footer-tag {
+
+        /* =========================================================
+           BACK TO TOP
+        ========================================================= */
+
+        .back-top {
+            position: fixed;
+
+            right: 22px;
+            bottom: 22px;
+
+            width: 42px;
+            height: 42px;
+
+            z-index: 900;
+
+            display: grid;
+
+            place-items: center;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,0.9);
+
+            backdrop-filter: blur(10px);
+
             color: var(--primary);
-            font-size: 0.82rem;
-            font-weight: 750;
-        }
 
-        /* =========================
-           REVEAL ANIMATION
-        ========================= */
-
-        .reveal {
             opacity: 0;
-            transform: translateY(25px);
+
+            pointer-events: none;
+
+            transform:
+                translateY(10px);
+
             transition:
-                opacity 0.8s ease,
-                transform 0.8s ease;
+                opacity 0.25s ease,
+                transform 0.25s ease;
         }
 
-        .reveal.visible {
+        .back-top.visible {
             opacity: 1;
-            transform: translateY(0);
+
+            pointer-events: auto;
+
+            transform:
+                translateY(0);
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
 
-        @media (max-width: 1000px) {
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 950px) {
+
             .hero-inner {
                 grid-template-columns: 1fr;
-                gap: 50px;
+
+                gap: 40px;
             }
 
-            .hero-content {
-                text-align: center;
-            }
-
-            .hero-description {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-actions {
-                justify-content: center;
+            .hero-copy {
+                max-width: 720px;
             }
 
             .hero-visual {
-                min-height: 500px;
+                min-height: 480px;
             }
 
-            .feature-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .hero-card {
+                width: min(100%, 390px);
             }
 
-            .process-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .destination-grid {
+                grid-template-columns:
+                    1fr 1fr;
+
+                grid-template-rows:
+                    230px
+                    230px
+                    230px;
             }
+
+            .destination-large {
+                grid-row:
+                    span 2;
+            }
+
+            .destination:last-child {
+                grid-column:
+                    span 2;
+            }
+
         }
 
-        @media (max-width: 760px) {
+
+        @media (max-width: 700px) {
+
             .navbar {
-                padding: 15px 5%;
+                padding:
+                    14px 5%;
             }
 
             .nav-links {
@@ -813,131 +1516,208 @@
             }
 
             .hero {
-                padding-top: 125px;
+                padding-top: 105px;
             }
 
             .hero h1 {
-                font-size: clamp(3rem, 14vw, 4.4rem);
-            }
-
-            .hero-description {
-                font-size: 1rem;
+                font-size: 4rem;
             }
 
             .hero-visual {
-                min-height: 470px;
+                min-height: 430px;
             }
 
-            .journey-card {
-                min-height: 450px;
+            .hero-card {
+                min-height: 400px;
             }
 
-            .card-image {
-                height: 225px;
+            .hero-orbit {
+                width: 330px;
+                height: 330px;
             }
 
-            .chip-one {
-                left: -4px;
-            }
-
-            .chip-two {
-                right: -5px;
-            }
-
-            .stats-inner {
-                grid-template-columns: 1fr;
-            }
-
-            .stat {
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-            }
-
-            .stat:last-child {
-                border-bottom: none;
+            .floating-note {
+                display: none;
             }
 
             .section {
-                padding: 75px 5%;
+                padding:
+                    75px 5%;
             }
 
-            .feature-grid,
-            .process-grid {
+            .steps {
                 grid-template-columns: 1fr;
             }
 
-            .cta-card {
-                padding: 55px 30px;
+            .step {
+                min-height: auto;
+            }
+
+            .step-number {
+                margin-bottom: 25px;
+            }
+
+            .experience-content {
+                padding: 38px 28px;
+            }
+
+            .experience-card {
+                min-height: 520px;
+            }
+
+            .destination-header {
+                display: block;
+            }
+
+            .destination-header a {
+                display: inline-block;
+
+                margin-top: 13px;
+            }
+
+            .destination-grid {
+                display: grid;
+
+                grid-template-columns: 1fr;
+
+                grid-template-rows:
+                    repeat(5, 230px);
+            }
+
+            .destination-large,
+            .destination:last-child {
+                grid-column: auto;
+
+                grid-row: auto;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+
+                gap: 35px;
+            }
+
+            .final-section {
+                padding:
+                    75px 5%;
             }
 
             .footer-inner {
                 flex-direction: column;
+
                 text-align: center;
             }
+
         }
 
-        @media (max-width: 480px) {
-            .hero {
-                padding-left: 20px;
-                padding-right: 20px;
+
+        @media (max-width: 420px) {
+
+            .hero h1 {
+                font-size: 3.35rem;
             }
 
-            .stats,
-            .section,
-            .cta {
-                padding-left: 20px;
-                padding-right: 20px;
+            .hero-description {
+                font-size: 0.86rem;
             }
 
-            .journey-card {
+            .hero-actions {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .primary-button,
+            .secondary-button {
                 width: 100%;
-                padding: 14px;
             }
 
-            .journey-meta {
-                gap: 6px;
+            .hero-card {
+                min-height: 365px;
             }
 
-            .meta-box {
-                padding: 8px;
-            }
-
-            .meta-box strong {
-                font-size: 0.75rem;
-            }
         }
+
     </style>
 </head>
 
+
 <body>
 
-    <!-- =========================
+
+    <!-- =========================================================
          NAVIGATION
-    ========================== -->
+    ========================================================== -->
 
     <header class="navbar" id="navbar">
+
         <div class="nav-inner">
 
-            <a href="index.html" class="brand">
-                <span class="brand-mark">Y</span>
-                <span>Yatra</span>
+            <a
+                href="index.html"
+                class="brand"
+            >
+
+                <span class="brand-mark">
+                    Y
+                </span>
+
+                <span>
+                    Yatra
+                </span>
+
             </a>
 
+
             <nav class="nav-links">
-                <a href="#discover">Discover</a>
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How it works</a>
-                <a href="#about">About</a>
-                <a href="planner.html" class="nav-cta">Plan a Journey →</a>
+
+                <a
+                    href="index.html"
+                    class="nav-link active"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="places.html"
+                    class="nav-link"
+                >
+                    Explore
+                </a>
+
+                <a
+                    href="planner.html"
+                    class="nav-link"
+                >
+                    Plan
+                </a>
+
+                <a
+                    href="itinerary.html"
+                    class="nav-link"
+                >
+                    My Journey
+                </a>
+
             </nav>
 
+
+            <a
+                href="planner.html"
+                class="nav-button"
+            >
+                Start planning →
+            </a>
+
         </div>
+
     </header>
 
 
-    <!-- =========================
+
+    <!-- =========================================================
          HERO
-    ========================== -->
+    ========================================================== -->
 
     <main>
 
@@ -945,33 +1725,56 @@
 
             <div class="hero-inner">
 
-                <div class="hero-content reveal">
+
+                <div class="hero-copy">
 
                     <div class="eyebrow">
+
                         <span class="eyebrow-dot"></span>
-                        Intelligent tourism
+
+                        A smarter way to travel
+
                     </div>
 
+
                     <h1>
-                        Travel with a
-                        <span>better plan.</span>
+
+                        Travel
+
+                        <span>
+                            beyond
+                        </span>
+
+                        places.
+
                     </h1>
 
+
                     <p class="hero-description">
-                        Yatra helps travelers discover meaningful places,
-                        build personalized journeys, and make smarter travel
-                        decisions based on their time, budget and interests.
+
+                        Yatra helps you discover meaningful destinations,
+                        understand what makes them special, and build a
+                        journey around the way you actually want to travel.
+
                     </p>
+
 
                     <div class="hero-actions">
 
-                        <a href="planner.html" class="primary-button">
+                        <a
+                            href="planner.html"
+                            class="primary-button"
+                        >
                             Plan my journey
                             <span>→</span>
                         </a>
 
-                        <a href="#how-it-works" class="secondary-button">
-                            See how it works
+
+                        <a
+                            href="places.html"
+                            class="secondary-button"
+                        >
+                            Explore destinations
                         </a>
 
                     </div>
@@ -979,69 +1782,78 @@
                 </div>
 
 
-                <div class="hero-visual reveal">
 
-                    <div class="floating-chip chip-one">
-                        <span>✦</span>
-                        Personalized
+                <!-- HERO VISUAL -->
+
+                <div class="hero-visual">
+
+                    <div class="hero-orbit"></div>
+
+
+                    <div class="floating-note note-one">
+
+                        <strong>
+                            Discover
+                        </strong>
+
+                        <span>
+                            places that fit you
+                        </span>
+
                     </div>
 
-                    <div class="journey-card">
 
-                        <div class="card-image">
+                    <div class="floating-note note-two">
 
-                            <div class="sun"></div>
+                        <strong>
+                            Your journey
+                        </strong>
 
-                            <div class="mountain one"></div>
-                            <div class="mountain two"></div>
+                        <span>
+                            planned your way
+                        </span>
 
-                            <div class="location-badge">
-                                ✦ Tamil Nadu
-                            </div>
+                    </div>
+
+
+                    <div class="hero-card">
+
+                        <div class="hero-card-top">
+
+                            <span class="hero-card-label">
+                                YATRA / 01
+                            </span>
+
+                            <span class="hero-card-number">
+                                SOUTH INDIA
+                            </span>
 
                         </div>
 
-                        <div class="journey-content">
 
-                            <div class="journey-label">
-                                Suggested journey
-                            </div>
+                        <div class="hero-landscape">
+                            🌴
+                        </div>
+
+
+                        <div class="hero-card-content">
+
+                            <small>
+                                Featured experience
+                            </small>
 
                             <h3>
-                                Heritage & Coast
+                                Pondicherry
                             </h3>
 
                             <p>
-                                A balanced journey combining history,
-                                local culture and the coast.
+                                Coastal evenings, old streets,
+                                local food and a slower way of
+                                experiencing the city.
                             </p>
 
-                            <div class="journey-meta">
-
-                                <div class="meta-box">
-                                    <small>Duration</small>
-                                    <strong>2 Days</strong>
-                                </div>
-
-                                <div class="meta-box">
-                                    <small>Budget</small>
-                                    <strong>₹3,500</strong>
-                                </div>
-
-                                <div class="meta-box">
-                                    <small>Style</small>
-                                    <strong>Culture</strong>
-                                </div>
-
-                            </div>
-
                         </div>
 
-                    </div>
-
-                    <div class="floating-chip chip-two">
-                        <span>◉</span>
-                        Smart itinerary
                     </div>
 
                 </div>
@@ -1051,236 +1863,416 @@
         </section>
 
 
-        <!-- =========================
+
+        <!-- =====================================================
+             MARQUEE
+        ====================================================== -->
+
+        <div class="marquee">
+
+            <div class="marquee-track">
+
+                <div class="marquee-item">
+                    Discover
+                    <span class="marquee-dot"></span>
+                    Plan
+                    <span class="marquee-dot"></span>
+                    Experience
+                    <span class="marquee-dot"></span>
+                    Remember
+                    <span class="marquee-dot"></span>
+                </div>
+
+
+                <div class="marquee-item">
+
+                    Discover
+                    <span class="marquee-dot"></span>
+
+                    Plan
+                    <span class="marquee-dot"></span>
+
+                    Experience
+                    <span class="marquee-dot"></span>
+
+                    Remember
+                    <span class="marquee-dot"></span>
+
+                </div>
+
+
+                <div class="marquee-item">
+
+                    Discover
+                    <span class="marquee-dot"></span>
+
+                    Plan
+                    <span class="marquee-dot"></span>
+
+                    Experience
+                    <span class="marquee-dot"></span>
+
+                    Remember
+                    <span class="marquee-dot"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             INTRO
+        ====================================================== -->
+
+        <section class="section">
+
+            <div class="section-label">
+                How Yatra works
+            </div>
+
+
+            <h2 class="section-title">
+
+                A trip should feel like
+
+                <span>
+                    yours.
+                </span>
+
+            </h2>
+
+
+            <p class="section-description">
+
+                Instead of starting with a fixed package,
+                Yatra starts with the traveller. Choose what
+                interests you, where you want to go and what
+                kind of experience you want — then build the
+                journey around it.
+
+            </p>
+
+
+            <div class="steps">
+
+
+                <article class="step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Discover
+                    </h3>
+
+                    <p>
+                        Explore destinations based on culture,
+                        history, nature, food, adventure and the
+                        kind of experience you're looking for.
+                    </p>
+
+                </article>
+
+
+                <article class="step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Tell Yatra
+                    </h3>
+
+                    <p>
+                        Give Yatra your destination, available
+                        time, interests and travel preferences
+                        instead of following a generic itinerary.
+                    </p>
+
+                </article>
+
+
+                <article class="step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Experience
+                    </h3>
+
+                    <p>
+                        Get a structured journey that brings
+                        destinations, activities and experiences
+                        together into one simple travel plan.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             FEATURED EXPERIENCE
+        ====================================================== -->
+
+        <section class="experience-section">
+
+            <div class="experience-container">
+
+                <div class="experience-card">
+
+                    <div class="experience-content">
+
+                        <div class="section-label">
+                            Not another travel list
+                        </div>
+
+                        <h2>
+                            Find the
+                            <br>
+                            story behind
+                            <br>
+                            the place.
+                        </h2>
+
+                        <p>
+                            Yatra is designed to make tourism more
+                            meaningful — connecting destinations with
+                            local culture, experiences and the interests
+                            of the traveller.
+                        </p>
+
+                        <a
+                            href="places.html"
+                            class="experience-button"
+                        >
+                            Start exploring →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             DESTINATIONS
+        ====================================================== -->
+
+        <section class="section">
+
+            <div class="destination-header">
+
+                <div>
+
+                    <div class="section-label">
+                        Explore
+                    </div>
+
+                    <h2 class="section-title">
+                        Where will your
+                        <span>
+                            story begin?
+                        </span>
+                    </h2>
+
+                </div>
+
+
+                <a href="places.html">
+                    View all destinations →
+                </a>
+
+            </div>
+
+
+            <div class="destination-grid">
+
+
+                <a
+                    href="places.html"
+                    class="destination destination-large"
+                >
+
+                    <div class="destination-visual">
+                        🏛️
+                    </div>
+
+                    <div class="destination-info">
+
+                        <small>
+                            Heritage
+                        </small>
+
+                        <h3>
+                            Thanjavur
+                        </h3>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="places.html"
+                    class="destination"
+                >
+
+                    <div class="destination-visual">
+                        🌊
+                    </div>
+
+                    <div class="destination-info">
+
+                        <small>
+                            Coast
+                        </small>
+
+                        <h3>
+                            Pondicherry
+                        </h3>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="places.html"
+                    class="destination"
+                >
+
+                    <div class="destination-visual">
+                        🌿
+                    </div>
+
+                    <div class="destination-info">
+
+                        <small>
+                            Nature
+                        </small>
+
+                        <h3>
+                            Ooty
+                        </h3>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="places.html"
+                    class="destination"
+                >
+
+                    <div class="destination-visual">
+                        🛕
+                    </div>
+
+                    <div class="destination-info">
+
+                        <small>
+                            Culture
+                        </small>
+
+                        <h3>
+                            Madurai
+                        </h3>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="places.html"
+                    class="destination"
+                >
+
+                    <div class="destination-visual">
+                        ⛰️
+                    </div>
+
+                    <div class="destination-info">
+
+                        <small>
+                            Adventure
+                        </small>
+
+                        <h3>
+                            Rishikesh
+                        </h3>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
              STATS
-        ========================== -->
+        ====================================================== -->
 
-        <section class="stats">
+        <section class="stats-section">
 
-            <div class="stats-inner reveal">
+            <div class="stats">
+
 
                 <div class="stat">
-                    <strong>Personalized</strong>
-                    <span>Trips built around the traveler</span>
+
+                    <div class="stat-number">
+                        01
+                    </div>
+
+                    <div class="stat-label">
+                        Traveller-first approach
+                    </div>
+
                 </div>
+
 
                 <div class="stat">
-                    <strong>Practical</strong>
-                    <span>Time, budget and distance considered</span>
+
+                    <div class="stat-number">
+                        05+
+                    </div>
+
+                    <div class="stat-label">
+                        Experience categories
+                    </div>
+
                 </div>
+
 
                 <div class="stat">
-                    <strong>Local</strong>
-                    <span>Discover experiences beyond the obvious</span>
-                </div>
 
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             DISCOVER
-        ========================== -->
-
-        <section class="section" id="discover">
-
-            <div class="section-inner">
-
-                <div class="section-heading reveal">
-
-                    <div class="eyebrow">
-                        <span class="eyebrow-dot"></span>
-                        The idea
+                    <div class="stat-number">
+                        ∞
                     </div>
 
-                    <h2>
-                        Tourism should feel
-                        personal, not complicated.
-                    </h2>
-
-                    <p>
-                        Travelers often have to piece together information
-                        from multiple sources before they can make a simple
-                        travel decision. Yatra brings the important pieces
-                        together into one intelligent experience.
-                    </p>
-
-                </div>
-
-
-                <div class="feature-grid">
-
-                    <article class="feature-card reveal">
-
-                        <span class="feature-number">01</span>
-
-                        <div class="feature-icon">
-                            ✦
-                        </div>
-
-                        <h3>
-                            Understand the traveler
-                        </h3>
-
-                        <p>
-                            Instead of showing everyone the same destinations,
-                            the platform considers interests, available time,
-                            budget and travel preferences.
-                        </p>
-
-                    </article>
-
-
-                    <article class="feature-card reveal">
-
-                        <span class="feature-number">02</span>
-
-                        <div class="feature-icon">
-                            ◇
-                        </div>
-
-                        <h3>
-                            Build a practical journey
-                        </h3>
-
-                        <p>
-                            Turn scattered destination choices into a coherent
-                            itinerary that considers time, distance and the
-                            order in which places should be visited.
-                        </p>
-
-                    </article>
-
-
-                    <article class="feature-card reveal">
-
-                        <span class="feature-number">03</span>
-
-                        <div class="feature-icon">
-                            ◎
-                        </div>
-
-                        <h3>
-                            Discover local experiences
-                        </h3>
-
-                        <p>
-                            Give travelers opportunities to discover cultural
-                            places, local experiences and lesser-known
-                            destinations alongside popular attractions.
-                        </p>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             HOW IT WORKS
-        ========================== -->
-
-        <section class="section process-section" id="how-it-works">
-
-            <div class="section-inner">
-
-                <div class="section-heading reveal">
-
-                    <div class="eyebrow">
-                        <span class="eyebrow-dot"></span>
-                        How it works
+                    <div class="stat-label">
+                        Ways to experience a place
                     </div>
 
-                    <h2>
-                        Four steps from
-                        idea to journey.
-                    </h2>
-
-                    <p>
-                        The final platform will turn a traveler's simple
-                        preferences into a useful, personalized journey.
-                    </p>
-
-                </div>
-
-
-                <div class="process-grid">
-
-                    <article class="process-card reveal">
-
-                        <div class="process-step">
-                            01 / TELL US
-                        </div>
-
-                        <h3>
-                            Your preferences
-                        </h3>
-
-                        <p>
-                            Choose your destination, duration, budget and
-                            interests.
-                        </p>
-
-                    </article>
-
-
-                    <article class="process-card reveal">
-
-                        <div class="process-step">
-                            02 / UNDERSTAND
-                        </div>
-
-                        <h3>
-                            Analyze the trip
-                        </h3>
-
-                        <p>
-                            The system evaluates places and constraints to
-                            understand what fits the journey.
-                        </p>
-
-                    </article>
-
-
-                    <article class="process-card reveal">
-
-                        <div class="process-step">
-                            03 / CREATE
-                        </div>
-
-                        <h3>
-                            Build the itinerary
-                        </h3>
-
-                        <p>
-                            Suitable destinations are arranged into a
-                            practical day-by-day plan.
-                        </p>
-
-                    </article>
-
-
-                    <article class="process-card reveal">
-
-                        <div class="process-step">
-                            04 / ADAPT
-                        </div>
-
-                        <h3>
-                            Refine your journey
-                        </h3>
-
-                        <p>
-                            Travelers can change preferences and adjust the
-                            journey instead of starting from scratch.
-                        </p>
-
-                    </article>
-
                 </div>
 
             </div>
@@ -1288,59 +2280,41 @@
         </section>
 
 
-        <!-- =========================
-             ABOUT / PROJECT PURPOSE
-        ========================== -->
 
-        <section class="section" id="about">
+        <!-- =====================================================
+             FINAL CTA
+        ====================================================== -->
 
-            <div class="section-inner">
+        <section class="final-section">
 
-                <div class="section-heading reveal">
-
-                    <div class="eyebrow">
-                        <span class="eyebrow-dot"></span>
-                        Built for smarter tourism
-                    </div>
-
-                    <h2>
-                        Technology should help people
-                        experience a place better.
-                    </h2>
-
-                    <p>
-                        Yatra is designed as an intelligent tourism solution
-                        for travelers who want useful recommendations rather
-                        than an overwhelming list of options.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             CTA
-        ========================== -->
-
-        <section class="cta">
-
-            <div class="cta-card reveal">
+            <div class="final-card">
 
                 <h2>
-                    Your next journey starts with one decision.
+
+                    Your next journey
+                    starts with
+
+                    <span>
+                        one idea.
+                    </span>
+
                 </h2>
 
+
                 <p>
-                    Tell Yatra what kind of experience you want.
-                    We'll build the journey around you.
+
+                    Pick a destination, tell Yatra what you
+                    want from the journey, and start building
+                    something that feels like your own.
+
                 </p>
 
-                <a href="planner.html" class="primary-button">
-                    Start planning
-                    <span>→</span>
+
+                <a
+                    href="planner.html"
+                    class="primary-button"
+                >
+                    Build my journey →
                 </a>
 
             </div>
@@ -1350,20 +2324,37 @@
     </main>
 
 
-    <!-- =========================
+
+    <!-- =========================================================
          FOOTER
-    ========================== -->
+    ========================================================== -->
 
     <footer>
 
         <div class="footer-inner">
 
-            <div class="footer-copy">
-                © 2026 Yatra. SIH Tourism Project.
+            <div class="footer-brand">
+
+                <span class="footer-mark">
+                    Y
+                </span>
+
+                Yatra
+
             </div>
 
-            <div class="footer-tag">
-                Built for meaningful travel.
+
+            <div class="footer-copy">
+
+                © 2026 Yatra · SIH Tourism Project
+
+            </div>
+
+
+            <div class="footer-copy">
+
+                Discover · Plan · Experience
+
             </div>
 
         </div>
@@ -1371,95 +2362,202 @@
     </footer>
 
 
-    <!-- =========================
+
+    <!-- =========================================================
+         BACK TO TOP
+    ========================================================== -->
+
+    <button
+        class="back-top"
+        id="backTop"
+        aria-label="Back to top"
+    >
+        ↑
+    </button>
+
+
+
+    <!-- =========================================================
          JAVASCRIPT
-    ========================== -->
+    ========================================================== -->
 
     <script>
 
-        /*
-         * Navbar background on scroll
-         */
+        /* =====================================================
+           NAVBAR SCROLL EFFECT
+        ====================================================== */
 
-        const navbar = document.getElementById("navbar");
-
-        window.addEventListener("scroll", () => {
-
-            if (window.scrollY > 30) {
-                navbar.classList.add("scrolled");
-            } else {
-                navbar.classList.remove("scrolled");
-            }
-
-        });
+        const navbar =
+            document.getElementById("navbar");
 
 
-        /*
-         * Reveal animations
-         */
+        window.addEventListener(
+            "scroll",
+            () => {
 
-        const revealElements = document.querySelectorAll(".reveal");
+                if (window.scrollY > 35) {
 
-        const revealObserver = new IntersectionObserver(
-            (entries, observer) => {
+                    navbar.classList.add(
+                        "scrolled"
+                    );
 
-                entries.forEach((entry) => {
+                } else {
 
-                    if (entry.isIntersecting) {
+                    navbar.classList.remove(
+                        "scrolled"
+                    );
 
-                        entry.target.classList.add("visible");
+                }
 
-                        observer.unobserve(entry.target);
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12
             }
         );
 
 
-        revealElements.forEach((element) => {
-            revealObserver.observe(element);
-        });
+
+        /* =====================================================
+           BACK TO TOP
+        ====================================================== */
+
+        const backTop =
+            document.getElementById("backTop");
 
 
-        /*
-         * Smooth anchor navigation
-         */
+        window.addEventListener(
+            "scroll",
+            () => {
 
-        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+                if (window.scrollY > 500) {
 
-            link.addEventListener("click", (event) => {
+                    backTop.classList.add(
+                        "visible"
+                    );
 
-                const targetId = link.getAttribute("href");
+                } else {
 
-                if (targetId === "#") {
-                    return;
+                    backTop.classList.remove(
+                        "visible"
+                    );
+
                 }
 
-                const target = document.querySelector(targetId);
+            }
+        );
 
-                if (!target) {
-                    return;
-                }
 
-                event.preventDefault();
+        backTop.addEventListener(
+            "click",
+            () => {
 
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
                 });
 
-            });
+            }
+        );
 
-        });
+
+
+        /* =====================================================
+           SMOOTH INTERNAL NAVIGATION
+        ====================================================== */
+
+        document
+            .querySelectorAll(
+                'a[href^="#"]'
+            )
+            .forEach(
+                (link) => {
+
+                    link.addEventListener(
+                        "click",
+                        (event) => {
+
+                            const target =
+                                document.querySelector(
+                                    link.getAttribute("href")
+                                );
+
+                            if (!target) {
+                                return;
+                            }
+
+                            event.preventDefault();
+
+                            target.scrollIntoView({
+                                behavior: "smooth"
+                            });
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =====================================================
+           SIMPLE CARD REVEAL
+        ====================================================== */
+
+        const revealElements =
+            document.querySelectorAll(
+                ".step, .destination, .final-card"
+            );
+
+
+        const observer =
+            new IntersectionObserver(
+                (entries) => {
+
+                    entries.forEach(
+                        (entry) => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target.style.opacity =
+                                    "1";
+
+                                entry.target.style.transform =
+                                    "translateY(0)";
+
+                                observer.unobserve(
+                                    entry.target
+                                );
+
+                            }
+
+                        }
+                    );
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        revealElements.forEach(
+            (element) => {
+
+                element.style.opacity = "0";
+
+                element.style.transform =
+                    "translateY(20px)";
+
+                element.style.transition =
+                    "opacity 0.65s ease, transform 0.65s ease";
+
+                observer.observe(
+                    element
+                );
+
+            }
+        );
 
     </script>
 
 </body>
 </html>
-```
