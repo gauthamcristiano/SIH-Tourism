@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Places — Yatra</title>
+
+    <meta
+        name="description"
+        content="Discover destinations and experiences with Yatra."
+    >
+
+    <style>
+        :root {
+            --bg: #f7f4ed;
+            --surface: #fffdf8;
+            --surface-soft: #f0ece2;
+            --text: #17221d;
+            --muted: #68736c;
+            --primary: #174f3b;
+            --primary-dark: #10392b;
+            --accent: #e3a72f;
+            --border: rgba(23, 34, 29, 0.12);
+            --shadow: 0 20px 60px rgba(23, 34, 29, 0.10);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =====================================
+           NAVIGATION
+        ====================================== */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 17px 5%;
+            background: rgba(247, 244, 237, 0.94);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1180px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 1.2rem;
+            font-weight: 850;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-mark {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-link {
+            color: var(--muted);
+            font-size: 0.84rem;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 17px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-dark);
+        }
+
+        /* =====================================
+           HERO
+        ====================================== */
+
+        .hero {
+            max-width: 1180px;
+            margin: auto;
+            padding: 78px 5% 45px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(23, 79, 59, 0.08);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 850;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .hero h1 {
+            max-width: 850px;
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: 0.94;
+            letter-spacing: -0.07em;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* =====================================
+           SEARCH
+        ====================================== */
+
+        .search-section {
+            max-width: 1180px;
+            margin: auto;
+            padding: 15px 5% 35px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 9px 9px 9px 19px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(23, 34, 29, 0.05);
+        }
+
+        .search-icon {
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .search-box input::placeholder {
+            color: #8a938c;
+        }
+
+        .clear-search {
+            display: none;
+            border: none;
+            background: var(--surface-soft);
+            color: var(--muted);
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            font-weight: 800;
+        }
+
+        .clear-search.visible {
+            display: block;
+        }
+
+        /* =====================================
+           FILTERS
+        ====================================== */
+
+        .filter-section {
+            max-width: 1180px;
+            margin: auto;
+            padding: 5px 5% 50px;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--muted);
+            padding: 9px 15px;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            font-weight: 750;
+            transition: 0.2s ease;
+        }
+
+        .filter-button:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* =====================================
+           FEATURED DESTINATION
+        ====================================== */
+
+        .featured-section {
+            max-width: 1180px;
+            margin: auto;
+            padding: 0 5% 70px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            letter-spacing: -0.05em;
+            line-height: 1;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        .featured-card {
+            position: relative;
+            min-height: 380px;
+            overflow: hidden;
+            border-radius: 28px;
+            background:
+                linear-gradient(
+                    120deg,
+                    #173d31,
+                    #28624c 60%,
+                    #739176
+                );
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .featured-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.14;
+            background-image:
+                radial-gradient(
+                    circle at 20% 20%,
+                    white 0 2px,
+                    transparent 3px
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    white 0 2px,
+                    transparent 3px
+                );
+            background-size: 60px 60px;
+        }
+
+        .featured-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            padding: 48px;
+        }
+
+        .featured-label {
+            display: inline-block;
+            padding: 6px 10px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.1);
+            border-radius: 999px;
+            font-size: 0.67rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+        }
+
+        .featured-content h3 {
+            font-size: clamp(2.2rem, 5vw, 4.4rem);
+            line-height: 0.95;
+            letter-spacing: -0.065em;
+            margin-bottom: 18px;
+        }
+
+        .featured-content p {
+            max-width: 570px;
+            color: rgba(255,255,255,0.78);
+            font-size: 0.88rem;
+            line-height: 1.8;
+            margin-bottom: 27px;
+        }
+
+        .featured-button {
+            border: none;
+            border-radius: 999px;
+            background: white;
+            color: var(--primary);
+            padding: 13px 20px;
+            font-weight: 850;
+            font-size: 0.8rem;
+        }
+
+        .featured-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* =====================================
+           PLACES GRID
+        ====================================== */
+
+        .places-section {
+            max-width: 1180px;
+            margin: auto;
+            padding: 0 5% 90px;
+        }
+
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .place-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 23px;
+            transition: 0.3s ease;
+        }
+
+        .place-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .place-visual {
+            height: 205px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 19px;
+            overflow: hidden;
+            background:
+                linear-gradient(
+                    135deg,
+                    #d9dfd2,
+                    #b5c9b7
+                );
+        }
+
+        .place-card:nth-child(2n) .place-visual {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ded8c5,
+                    #c4ad7f
+                );
+        }
+
+        .place-card:nth-child(3n) .place-visual {
+            background:
+                linear-gradient(
+                    135deg,
+                    #cad8d4,
+                    #9ebbb4
+                );
+        }
+
+        .visual-symbol {
+            position: absolute;
+            right: 24px;
+            top: 20px;
+            font-size: 5.2rem;
+            opacity: 0.28;
+            transform: rotate(-8deg);
+        }
+
+        .visual-location {
+            position: relative;
+            z-index: 2;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.76);
+            backdrop-filter: blur(8px);
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .place-info {
+            padding: 21px;
+        }
+
+        .place-type {
+            color: var(--accent);
+            font-size: 0.65rem;
+            font-weight: 850;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 5px;
+        }
+
+        .place-info h3 {
+            font-size: 1.2rem;
+            letter-spacing: -0.03em;
+            margin-bottom: 7px;
+        }
+
+        .place-info p {
+            color: var(--muted);
+            font-size: 0.76rem;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .place-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .place-meta {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--muted);
+            font-size: 0.67rem;
+            font-weight: 700;
+        }
+
+        .plan-button {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--primary);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 850;
+        }
+
+        .plan-button:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* =====================================
+           NO RESULTS
+        ====================================== */
+
+        .no-results {
+            display: none;
+            padding: 70px 20px;
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 23px;
+        }
+
+        .no-results.visible {
+            display: block;
+        }
+
+        .no-results-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .no-results h3 {
+            margin-bottom: 6px;
+        }
+
+        .no-results p {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        /* =====================================
+           CTA
+        ====================================== */
+
+        .cta-section {
+            max-width: 1180px;
+            margin: auto;
+            padding: 0 5% 90px;
+        }
+
+        .cta-card {
+            padding: 45px;
+            border-radius: 28px;
+            background: var(--surface-soft);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .cta-card h2 {
+            font-size: clamp(1.7rem, 4vw, 2.7rem);
+            line-height: 1;
+            letter-spacing: -0.05em;
+            margin-bottom: 10px;
+        }
+
+        .cta-card p {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .cta-button {
+            flex-shrink: 0;
+            border: none;
+            border-radius: 999px;
+            padding: 14px 21px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 850;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* =====================================
+           FOOTER
+        ====================================== */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 35px 5%;
+        }
+
+        .footer-inner {
+            max-width: 1180px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .footer-inner span {
+            color: var(--muted);
+            font-size: 0.72rem;
+        }
+
+        /* =====================================
+           TOAST
+        ====================================== */
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 25px;
+            z-index: 2000;
+            transform: translate(-50%, 100px);
+            background: var(--primary);
+            color: white;
+            padding: 13px 19px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 750;
+            box-shadow: 0 15px 35px rgba(23,34,29,0.25);
+            transition: 0.35s ease;
+        }
+
+        .toast.show {
+            transform: translate(-50%, 0);
+        }
+
+        /* =====================================
+           RESPONSIVE
+        ====================================== */
+
+        @media (max-width: 900px) {
+
+            .places-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .featured-content {
+                padding: 38px;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 14px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 55px;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .places-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-card {
+                min-height: 430px;
+            }
+
+            .featured-content {
+                padding: 30px;
+            }
+
+            .featured-content h3 {
+                font-size: 3rem;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .section-heading p {
+                margin-top: 8px;
+            }
+
+            .cta-card {
+                display: block;
+                padding: 30px;
+            }
+
+            .cta-button {
+                margin-top: 22px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================
+         NAVIGATION
+    ====================================== -->
+
+    <header class="navbar">
+
+        <div class="nav-inner">
+
+            <a href="index.html" class="brand">
+                <span class="brand-mark">Y</span>
+                <span>Yatra</span>
+            </a>
+
+            <nav class="nav-links">
+
+                <a
+                    href="index.html"
+                    class="nav-link"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="places.html"
+                    class="nav-link active"
+                >
+                    Explore
+                </a>
+
+                <a
+                    href="planner.html"
+                    class="nav-link"
+                >
+                    Plan
+                </a>
+
+            </nav>
+
+            <a
+                href="planner.html"
+                class="nav-cta"
+            >
+                Plan a journey
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                Discover India
+            </div>
+
+            <h1>
+                Don't just visit.
+                <span>Experience.</span>
+            </h1>
+
+            <p>
+                Discover places worth experiencing, from heritage streets
+                and local food to peaceful landscapes and unforgettable
+                adventures.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             SEARCH
+        ====================================== -->
+
+        <section class="search-section">
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search destinations, places or experiences..."
+                    autocomplete="off"
+                >
+
+                <button
+                    class="clear-search"
+                    id="clearSearch"
+                    aria-label="Clear search"
+                >
+                    ×
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             FILTERS
+        ====================================== -->
+
+        <section class="filter-section">
+
+            <div class="filter-row">
+
+                <button
+                    class="filter-button active"
+                    data-filter="All"
+                >
+                    All
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-filter="History"
+                >
+                    🏛️ History
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-filter="Culture"
+                >
+                    🎭 Culture
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-filter="Nature"
+                >
+                    🌿 Nature
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-filter="Food"
+                >
+                    🍲 Food
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-filter="Adventure"
+                >
+                    ⛰️ Adventure
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-filter="Relaxation"
+                >
+                    🌊 Relaxation
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             FEATURED
+        ====================================== -->
+
+        <section class="featured-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>
+                        Featured journey
+                    </h2>
+                </div>
+
+                <p>
+                    A place to start your next story.
+                </p>
+
+            </div>
+
+
+            <div class="featured-card">
+
+                <div class="featured-pattern"></div>
+
+                <div class="featured-content">
+
+                    <span class="featured-label">
+                        SOUTH INDIA
+                    </span>
+
+                    <h3>
+                        Pondicherry
+                    </h3>
+
+                    <p>
+                        French-inspired streets, coastal evenings, local
+                        cafés and a slower pace of travel. A destination
+                        where the journey itself becomes part of the experience.
+                    </p>
+
+                    <button
+                        class="featured-button"
+                        id="featuredButton"
+                    >
+                        Plan Pondicherry →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PLACES
+        ====================================== -->
+
+        <section class="places-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>
+                        Explore places
+                    </h2>
+                </div>
+
+                <p id="resultCount">
+                    Showing 12 places
+                </p>
+
+            </div>
+
+
+            <div
+                class="places-grid"
+                id="placesGrid"
+            >
+                <!-- Generated by JavaScript -->
+            </div>
+
+
+            <div
+                class="no-results"
+                id="noResults"
+            >
+
+                <div class="no-results-icon">
+                    ◌
+                </div>
+
+                <h3>
+                    We couldn't find that place.
+                </h3>
+
+                <p>
+                    Try another destination or experience.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             CTA
+        ====================================== -->
+
+        <section class="cta-section">
+
+            <div class="cta-card">
+
+                <div>
+
+                    <h2>
+                        Already know where you're going?
+                    </h2>
+
+                    <p>
+                        Tell Yatra what kind of journey you want.
+                    </p>
+
+                </div>
+
+                <a
+                    href="planner.html"
+                    class="cta-button"
+                >
+                    Build my itinerary →
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <span>
+                © 2026 Yatra. SIH Tourism Project.
+            </span>
+
+            <span>
+                Discover • Plan • Experience
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================
+         TOAST
+    ====================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+        Destination selected.
+    </div>
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <script>
+
+        /* =====================================
+           DESTINATION DATA
+        ====================================== */
+
+        const places = [
+
+            {
+                name: "Chennai",
+                location: "Tamil Nadu",
+                type: "Culture",
+                icon: "🌊",
+                description:
+                    "A vibrant coastal city combining heritage, food, temples and everyday urban culture."
+            },
+
+            {
+                name: "Pondicherry",
+                location: "Tamil Nadu",
+                type: "Relaxation",
+                icon: "🏖️",
+                description:
+                    "A relaxed coastal destination known for its French Quarter, cafés and distinctive atmosphere."
+            },
+
+            {
+                name: "Madurai",
+                location: "Tamil Nadu",
+                type: "History",
+                icon: "🛕",
+                description:
+                    "A historic city filled with temple architecture, traditions and one of Tamil Nadu's richest food cultures."
+            },
+
+            {
+                name: "Coimbatore",
+                location: "Tamil Nadu",
+                type: "Nature",
+                icon: "⛰️",
+                description:
+                    "A gateway to hills, forests, temples and outdoor experiences in western Tamil Nadu."
+            },
+
+            {
+                name: "Thanjavur",
+                location: "Tamil Nadu",
+                type: "History",
+                icon: "🏛️",
+                description:
+                    "Discover Chola history, magnificent architecture and one of South India's great cultural centres."
+            },
+
+            {
+                name: "Kodaikanal",
+                location: "Tamil Nadu",
+                type: "Nature",
+                icon: "🌲",
+                description:
+                    "A peaceful hill destination surrounded by forests, lakes and cool mountain landscapes."
+            },
+
+            {
+                name: "Ooty",
+                location: "Tamil Nadu",
+                type: "Nature",
+                icon: "🌿",
+                description:
+                    "Explore misty hills, gardens, tea landscapes and classic Nilgiri experiences."
+            },
+
+            {
+                name: "Rameswaram",
+                location: "Tamil Nadu",
+                type: "History",
+                icon: "🛕",
+                description:
+                    "A spiritually important coastal destination with remarkable architecture and island landscapes."
+            },
+
+            {
+                name: "Hampi",
+                location: "Karnataka",
+                type: "History",
+                icon: "🏺",
+                description:
+                    "Walk through the dramatic ruins and landscapes of the historic Vijayanagara empire."
+            },
+
+            {
+                name: "Munnar",
+                location: "Kerala",
+                type: "Nature",
+                icon: "🍃",
+                description:
+                    "Rolling tea plantations, mountain views and peaceful landscapes make Munnar ideal for slow travel."
+            },
+
+            {
+                name: "Jaipur",
+                location: "Rajasthan",
+                type: "Culture",
+                icon: "🏰",
+                description:
+                    "A colourful city of forts, markets, architecture and Rajasthan's distinctive cultural traditions."
+            },
+
+            {
+                name: "Varanasi",
+                location: "Uttar Pradesh",
+                type: "Culture",
+                icon: "🪔",
+                description:
+                    "Experience one of India's most historic cities through its ghats, traditions and spiritual culture."
+            },
+
+            {
+                name: "Goa",
+                location: "Goa",
+                type: "Relaxation",
+                icon: "🏝️",
+                description:
+                    "A coastal destination combining beaches, local culture, food and a laid-back travel atmosphere."
+            },
+
+            {
+                name: "Rishikesh",
+                location: "Uttarakhand",
+                type: "Adventure",
+                icon: "🧗",
+                description:
+                    "A destination for river experiences, mountain landscapes, yoga and outdoor adventure."
+            },
+
+            {
+                name: "Amritsar",
+                location: "Punjab",
+                type: "Culture",
+                icon: "✨",
+                description:
+                    "Discover important cultural landmarks, local food and the history surrounding the Golden Temple."
+            },
+
+            {
+                name: "Udaipur",
+                location: "Rajasthan",
+                type: "Culture",
+                icon: "🏰",
+                description:
+                    "Lakes, palaces, old streets and local arts make Udaipur ideal for a cultural journey."
+            },
+
+            {
+                name: "Andaman Islands",
+                location: "Andaman & Nicobar",
+                type: "Adventure",
+                icon: "🤿",
+                description:
+                    "Explore tropical landscapes, beaches and water-based experiences across the islands."
+            },
+
+            {
+                name: "Darjeeling",
+                location: "West Bengal",
+                type: "Nature",
+                icon: "🏔️",
+                description:
+                    "Mountain scenery, tea gardens and Himalayan culture create a memorable slow-travel destination."
+            }
+
+        ];
+
+
+        /* =====================================
+           DOM ELEMENTS
+        ====================================== */
+
+        const placesGrid =
+            document.getElementById("placesGrid");
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+        const clearSearch =
+            document.getElementById("clearSearch");
+
+        const noResults =
+            document.getElementById("noResults");
+
+        const resultCount =
+            document.getElementById("resultCount");
+
+        const filterButtons =
+            document.querySelectorAll(".filter-button");
+
+        const featuredButton =
+            document.getElementById("featuredButton");
+
+        const toast =
+            document.getElementById("toast");
+
+
+        let activeFilter = "All";
+
+
+        /* =====================================
+           ESCAPE HTML
+        ====================================== */
+
+        function escapeHTML(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value;
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================
+           SHOW TOAST
+        ====================================== */
+
+        function showToast(message) {
+
+            toast.textContent =
+                message;
+
+            toast.classList.add("show");
+
+            setTimeout(() => {
+
+                toast.classList.remove("show");
+
+            }, 2300);
+
+        }
+
+
+        /* =====================================
+           SELECT DESTINATION
+        ====================================== */
+
+        function selectDestination(destination) {
+
+            const existingData =
+                localStorage.getItem("yatraJourney");
+
+            let journey = {};
+
+            if (existingData) {
+
+                try {
+
+                    journey =
+                        JSON.parse(existingData);
+
+                } catch {
+
+                    journey = {};
+
+                }
+
+            }
+
+
+            journey.destination =
+                destination;
+
+
+            localStorage.setItem(
+                "yatraJourney",
+                JSON.stringify(journey)
+            );
+
+
+            showToast(
+                `${destination} selected`
+            );
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "planner.html";
+
+            }, 650);
+
+        }
+
+
+        /* =====================================
+           CREATE PLACE CARD
+        ====================================== */
+
+        function createPlaceCard(place) {
+
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "place-card";
+
+
+            card.innerHTML = `
+
+                <div class="place-visual">
+
+                    <div class="visual-symbol">
+                        ${place.icon}
+                    </div>
+
+                    <span class="visual-location">
+                        ${escapeHTML(place.location)}
+                    </span>
+
+                </div>
+
+
+                <div class="place-info">
+
+                    <div class="place-type">
+                        ${escapeHTML(place.type)}
+                    </div>
+
+                    <h3>
+                        ${escapeHTML(place.name)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(place.description)}
+                    </p>
+
+
+                    <div class="place-bottom">
+
+                        <span class="place-meta">
+                            ✦
+                            Explore
+                        </span>
+
+                        <button
+                            class="plan-button"
+                            data-destination="${escapeHTML(place.name)}"
+                        >
+                            Plan this →
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+
+            const button =
+                card.querySelector(".plan-button");
+
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    selectDestination(
+                        place.name
+                    );
+
+                }
+            );
+
+
+            return card;
+
+        }
+
+
+        /* =====================================
+           FILTER PLACES
+        ====================================== */
+
+        function filterPlaces() {
+
+            const searchTerm =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const filtered =
+                places.filter((place) => {
+
+                    const matchesFilter =
+                        activeFilter === "All" ||
+                        place.type === activeFilter;
+
+
+                    const searchableText =
+                        `
+                        ${place.name}
+                        ${place.location}
+                        ${place.type}
+                        ${place.description}
+                        `.toLowerCase();
+
+
+                    const matchesSearch =
+                        !searchTerm ||
+                        searchableText.includes(
+                            searchTerm
+                        );
+
+
+                    return (
+                        matchesFilter &&
+                        matchesSearch
+                    );
+
+                });
+
+
+            renderPlaces(filtered);
+
+        }
+
+
+        /* =====================================
+           RENDER PLACES
+        ====================================== */
+
+        function renderPlaces(list) {
+
+            placesGrid.innerHTML = "";
+
+
+            resultCount.textContent =
+                `Showing ${list.length} ${
+                    list.length === 1
+                        ? "place"
+                        : "places"
+                }`;
+
+
+            if (!list.length) {
+
+                noResults.classList.add(
+                    "visible"
+                );
+
+                return;
+
+            }
+
+
+            noResults.classList.remove(
+                "visible"
+            );
+
+
+            list.forEach((place) => {
+
+                placesGrid.appendChild(
+                    createPlaceCard(place)
+                );
+
+            });
+
+        }
+
+
+        /* =====================================
+           FILTER BUTTONS
+        ====================================== */
+
+        filterButtons.forEach(
+            (button) => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        filterButtons.forEach(
+                            (item) => {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        activeFilter =
+                            button.dataset.filter;
+
+
+                        filterPlaces();
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =====================================
+           SEARCH
+        ====================================== */
+
+        searchInput.addEventListener(
+            "input",
+            () => {
+
+                if (
+                    searchInput.value.trim()
+                ) {
+
+                    clearSearch.classList.add(
+                        "visible"
+                    );
+
+                } else {
+
+                    clearSearch.classList.remove(
+                        "visible"
+                    );
+
+                }
+
+
+                filterPlaces();
+
+            }
+        );
+
+
+        clearSearch.addEventListener(
+            "click",
+            () => {
+
+                searchInput.value = "";
+
+                clearSearch.classList.remove(
+                    "visible"
+                );
+
+                searchInput.focus();
+
+                filterPlaces();
+
+            }
+        );
+
+
+        /* =====================================
+           FEATURED BUTTON
+        ====================================== */
+
+        featuredButton.addEventListener(
+            "click",
+            () => {
+
+                selectDestination(
+                    "Pondicherry"
+                );
+
+            }
+        );
+
+
+        /* =====================================
+           INITIAL RENDER
+        ====================================== */
+
+        renderPlaces(places);
+
+    </script>
+
+</body>
+</html>
+
