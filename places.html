@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Explore Places — Yatra</title>
+    <title>Explore India — Yatra</title>
 
     <meta
         name="description"
-        content="Discover destinations and experiences with Yatra."
+        content="Discover places, food, culture, people and stories across India with Yatra."
     >
 
     <style>
@@ -734,6 +734,58 @@
                 text-align: center;
             }
         }
+    
+        /* ===== INDIA DISCOVERY UPGRADE ===== */
+        .hero-note{
+            margin-top:22px;
+            display:flex;
+            align-items:center;
+            gap:9px;
+            color:var(--primary);
+            font-size:.78rem;
+            font-weight:750;
+        }
+        .hero-note span{color:var(--accent);font-size:1rem}
+        .featured-tags{
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin-bottom:26px;
+        }
+        .featured-tags span{
+            padding:7px 10px;
+            border:1px solid rgba(255,255,255,.18);
+            background:rgba(255,255,255,.08);
+            border-radius:999px;
+            font-size:.68rem;
+            font-weight:750;
+        }
+        .visual-region{
+            position:absolute;
+            left:19px;
+            top:18px;
+            padding:6px 9px;
+            border-radius:999px;
+            background:rgba(255,255,255,.70);
+            font-size:.61rem;
+            font-weight:850;
+            color:var(--primary);
+        }
+        .experience-tags{
+            display:flex;
+            flex-wrap:wrap;
+            gap:6px;
+            margin-bottom:18px;
+        }
+        .experience-tags span{
+            padding:5px 8px;
+            background:var(--surface-soft);
+            border-radius:999px;
+            color:var(--muted);
+            font-size:.59rem;
+            font-weight:750;
+        }
+
     </style>
 </head>
 
@@ -799,19 +851,24 @@
 
             <div class="eyebrow">
                 <span class="eyebrow-dot"></span>
-                Discover India
+                Discover India differently
             </div>
 
             <h1>
                 Don't just visit.
-                <span>Experience.</span>
+                <span>Discover deeper.</span>
             </h1>
 
             <p>
-                Discover places worth experiencing, from heritage streets
-                and local food to peaceful landscapes and unforgettable
-                adventures.
+                Yatra goes beyond famous attractions. Explore places through
+                the food, people, culture, crafts, stories and everyday
+                experiences that give them meaning.
             </p>
+
+            <div class="hero-note">
+                <span>✦</span>
+                Less-explored places • Local experiences • Meaningful journeys
+            </div>
 
         </section>
 
@@ -831,7 +888,7 @@
                 <input
                     type="text"
                     id="searchInput"
-                    placeholder="Search destinations, places or experiences..."
+                    placeholder="Search places, states, food, culture or experiences..."
                     autocomplete="off"
                 >
 
@@ -856,53 +913,36 @@
 
             <div class="filter-row">
 
-                <button
-                    class="filter-button active"
-                    data-filter="All"
-                >
-                    All
+                <button class="filter-button active" data-filter="All">
+                    All India
                 </button>
 
-                <button
-                    class="filter-button"
-                    data-filter="History"
-                >
-                    🏛️ History
+                <button class="filter-button" data-filter="Less Explored">
+                    ✦ Less Explored
                 </button>
 
-                <button
-                    class="filter-button"
-                    data-filter="Culture"
-                >
-                    🎭 Culture
-                </button>
-
-                <button
-                    class="filter-button"
-                    data-filter="Nature"
-                >
-                    🌿 Nature
-                </button>
-
-                <button
-                    class="filter-button"
-                    data-filter="Food"
-                >
+                <button class="filter-button" data-filter="Food">
                     🍲 Food
                 </button>
 
-                <button
-                    class="filter-button"
-                    data-filter="Adventure"
-                >
+                <button class="filter-button" data-filter="Culture">
+                    🎭 Culture
+                </button>
+
+                <button class="filter-button" data-filter="Nature">
+                    🌿 Nature
+                </button>
+
+                <button class="filter-button" data-filter="Heritage">
+                    🏛️ Heritage
+                </button>
+
+                <button class="filter-button" data-filter="Adventure">
                     ⛰️ Adventure
                 </button>
 
-                <button
-                    class="filter-button"
-                    data-filter="Relaxation"
-                >
-                    🌊 Relaxation
+                <button class="filter-button" data-filter="Coast">
+                    🌊 Coast
                 </button>
 
             </div>
@@ -938,24 +978,32 @@
                 <div class="featured-content">
 
                     <span class="featured-label">
-                        SOUTH INDIA
+                        YATRA PICK • NILGIRIS
                     </span>
 
                     <h3>
-                        Pondicherry
+                        Ooty
                     </h3>
 
                     <p>
-                        French-inspired streets, coastal evenings, local
-                        cafés and a slower pace of travel. A destination
-                        where the journey itself becomes part of the experience.
+                        Don't stop at viewpoints and gardens. Build a Nilgiris journey around
+                        tea, mountain landscapes, local food, crafts, stories and carefully
+                        curated cultural experiences.
                     </p>
+
+                    <div class="featured-tags">
+                        <span>Tea</span>
+                        <span>Nature</span>
+                        <span>Local food</span>
+                        <span>Culture</span>
+                        <span>Stories</span>
+                    </div>
 
                     <button
                         class="featured-button"
                         id="featuredButton"
                     >
-                        Plan Pondicherry →
+                        Plan Ooty →
                     </button>
 
                 </div>
@@ -980,7 +1028,7 @@
                 </div>
 
                 <p id="resultCount">
-                    Showing 12 places
+                    Showing 24 places
                 </p>
 
             </div>
@@ -1004,11 +1052,11 @@
                 </div>
 
                 <h3>
-                    We couldn't find that place.
+                    We couldn't find that discovery.
                 </h3>
 
                 <p>
-                    Try another destination or experience.
+                    Try another destination, state, food, culture or experience.
                 </p>
 
             </div>
@@ -1063,7 +1111,7 @@
             </span>
 
             <span>
-                Discover • Plan • Experience
+                Discover • Connect • Experience
             </span>
 
         </div>
@@ -1096,165 +1144,172 @@
         const places = [
 
             {
-                name: "Chennai",
-                location: "Tamil Nadu",
-                type: "Culture",
-                icon: "🌊",
-                description:
-                    "A vibrant coastal city combining heritage, food, temples and everyday urban culture."
+                name:"Ooty", location:"Tamil Nadu", region:"South",
+                type:"Nature", icon:"🌿", lessExplored:true,
+                tags:["Tea","Food","Culture","Stories"],
+                description:"A Nilgiris journey built around mountain landscapes, tea, local food and the cultural depth of the hills.",
+                search:"ooty nilgiris tea food culture hills"
             },
-
             {
-                name: "Pondicherry",
-                location: "Tamil Nadu",
-                type: "Relaxation",
-                icon: "🏖️",
-                description:
-                    "A relaxed coastal destination known for its French Quarter, cafés and distinctive atmosphere."
+                name:"Chettinad", location:"Tamil Nadu", region:"South",
+                type:"Culture", icon:"🏠", lessExplored:true,
+                tags:["Food","Heritage","Crafts","Stories"],
+                description:"Explore grand heritage homes, Chettinad food traditions, crafts and the stories of its historic settlements.",
+                search:"chettinad karaikudi food mansions heritage craft"
             },
-
             {
-                name: "Madurai",
-                location: "Tamil Nadu",
-                type: "History",
-                icon: "🛕",
-                description:
-                    "A historic city filled with temple architecture, traditions and one of Tamil Nadu's richest food cultures."
+                name:"Thanjavur", location:"Tamil Nadu", region:"South",
+                type:"Heritage", icon:"🏛️", lessExplored:false,
+                tags:["Chola","Art","Food","Stories"],
+                description:"A cultural journey through architecture, classical arts, heritage and the traditions of the Cauvery delta.",
+                search:"thanjavur chola art culture food history"
             },
-
             {
-                name: "Coimbatore",
-                location: "Tamil Nadu",
-                type: "Nature",
-                icon: "⛰️",
-                description:
-                    "A gateway to hills, forests, temples and outdoor experiences in western Tamil Nadu."
+                name:"Madurai", location:"Tamil Nadu", region:"South",
+                type:"Culture", icon:"🛕", lessExplored:false,
+                tags:["Food","Temple","Markets","Stories"],
+                description:"Experience temple heritage, markets, local food and the everyday rhythm of a historic city.",
+                search:"madurai food temple culture market history"
             },
-
             {
-                name: "Thanjavur",
-                location: "Tamil Nadu",
-                type: "History",
-                icon: "🏛️",
-                description:
-                    "Discover Chola history, magnificent architecture and one of South India's great cultural centres."
+                name:"Kumbakonam", location:"Tamil Nadu", region:"South",
+                type:"Heritage", icon:"🪔", lessExplored:true,
+                tags:["Temples","Food","Crafts","Stories"],
+                description:"A slower heritage journey through temple towns, traditional food, craft traditions and delta landscapes.",
+                search:"kumbakonam temple food craft cauvery heritage"
             },
-
             {
-                name: "Kodaikanal",
-                location: "Tamil Nadu",
-                type: "Nature",
-                icon: "🌲",
-                description:
-                    "A peaceful hill destination surrounded by forests, lakes and cool mountain landscapes."
+                name:"Wayanad", location:"Kerala", region:"South",
+                type:"Nature", icon:"🌳", lessExplored:true,
+                tags:["Forest","Food","Culture","Stories"],
+                description:"Discover forests, plantations, regional food and carefully curated experiences connected to local life.",
+                search:"wayanad kerala forest food culture plantation"
             },
-
             {
-                name: "Ooty",
-                location: "Tamil Nadu",
-                type: "Nature",
-                icon: "🌿",
-                description:
-                    "Explore misty hills, gardens, tea landscapes and classic Nilgiri experiences."
+                name:"Munnar", location:"Kerala", region:"South",
+                type:"Nature", icon:"🍃", lessExplored:false,
+                tags:["Tea","Mountains","Food","Nature"],
+                description:"Go beyond viewpoints with tea landscapes, mountain scenery and the stories behind plantation life.",
+                search:"munnar tea plantation mountains kerala food"
             },
-
             {
-                name: "Rameswaram",
-                location: "Tamil Nadu",
-                type: "History",
-                icon: "🛕",
-                description:
-                    "A spiritually important coastal destination with remarkable architecture and island landscapes."
+                name:"Hampi", location:"Karnataka", region:"South",
+                type:"Heritage", icon:"🏺", lessExplored:false,
+                tags:["History","Ruins","Stories","Landscape"],
+                description:"Walk through an extraordinary historic landscape where architecture, stories and dramatic terrain meet.",
+                search:"hampi vijayanagara history ruins culture landscape"
             },
-
             {
-                name: "Hampi",
-                location: "Karnataka",
-                type: "History",
-                icon: "🏺",
-                description:
-                    "Walk through the dramatic ruins and landscapes of the historic Vijayanagara empire."
+                name:"Kutch", location:"Gujarat", region:"West",
+                type:"Culture", icon:"🧵", lessExplored:true,
+                tags:["Crafts","Food","Desert","People"],
+                description:"Explore craft traditions, desert landscapes, regional food and the communities that shape Kutch's identity.",
+                search:"kutch gujarat craft embroidery food desert culture"
             },
-
             {
-                name: "Munnar",
-                location: "Kerala",
-                type: "Nature",
-                icon: "🍃",
-                description:
-                    "Rolling tea plantations, mountain views and peaceful landscapes make Munnar ideal for slow travel."
+                name:"Dholavira", location:"Gujarat", region:"West",
+                type:"Heritage", icon:"🏺", lessExplored:true,
+                tags:["Archaeology","Desert","History","Stories"],
+                description:"A heritage-focused journey connecting an ancient archaeological landscape with the wider story of Kutch.",
+                search:"dholavira harappan archaeology kutch history desert"
             },
-
             {
-                name: "Jaipur",
-                location: "Rajasthan",
-                type: "Culture",
-                icon: "🏰",
-                description:
-                    "A colourful city of forts, markets, architecture and Rajasthan's distinctive cultural traditions."
+                name:"Mandu", location:"Madhya Pradesh", region:"Central",
+                type:"Heritage", icon:"🏰", lessExplored:true,
+                tags:["Architecture","History","Food","Stories"],
+                description:"Discover dramatic historic architecture, landscapes and the layered stories of a former medieval city.",
+                search:"mandu madhya pradesh heritage architecture history"
             },
-
             {
-                name: "Varanasi",
-                location: "Uttar Pradesh",
-                type: "Culture",
-                icon: "🪔",
-                description:
-                    "Experience one of India's most historic cities through its ghats, traditions and spiritual culture."
+                name:"Maheshwar", location:"Madhya Pradesh", region:"Central",
+                type:"Culture", icon:"🧵", lessExplored:true,
+                tags:["Weaving","River","Heritage","Food"],
+                description:"A riverside cultural journey shaped by handloom traditions, heritage architecture and local life.",
+                search:"maheshwar handloom saree narmada heritage culture"
             },
-
             {
-                name: "Goa",
-                location: "Goa",
-                type: "Relaxation",
-                icon: "🏝️",
-                description:
-                    "A coastal destination combining beaches, local culture, food and a laid-back travel atmosphere."
+                name:"Orchha", location:"Madhya Pradesh", region:"Central",
+                type:"Heritage", icon:"🏯", lessExplored:true,
+                tags:["Palaces","History","River","Stories"],
+                description:"Explore palaces, temples, river landscapes and the stories woven into Orchha's historic setting.",
+                search:"orchha madhya pradesh palace temple river history"
             },
-
             {
-                name: "Rishikesh",
-                location: "Uttarakhand",
-                type: "Adventure",
-                icon: "🧗",
-                description:
-                    "A destination for river experiences, mountain landscapes, yoga and outdoor adventure."
+                name:"Chopta", location:"Uttarakhand", region:"North",
+                type:"Adventure", icon:"🏔️", lessExplored:true,
+                tags:["Hiking","Mountains","Nature","Stories"],
+                description:"A mountain-focused journey for travellers looking for quieter Himalayan landscapes and outdoor experiences.",
+                search:"chopta uttarakhand trekking himalaya nature mountains"
             },
-
             {
-                name: "Amritsar",
-                location: "Punjab",
-                type: "Culture",
-                icon: "✨",
-                description:
-                    "Discover important cultural landmarks, local food and the history surrounding the Golden Temple."
+                name:"Spiti Valley", location:"Himachal Pradesh", region:"North",
+                type:"Adventure", icon:"🏔️", lessExplored:true,
+                tags:["Mountains","Monasteries","Stories","Road"],
+                description:"A high-altitude journey through dramatic landscapes, villages, monasteries and regional traditions.",
+                search:"spiti himachal monastery mountain village culture"
             },
-
             {
-                name: "Udaipur",
-                location: "Rajasthan",
-                type: "Culture",
-                icon: "🏰",
-                description:
-                    "Lakes, palaces, old streets and local arts make Udaipur ideal for a cultural journey."
+                name:"Bundi", location:"Rajasthan", region:"North",
+                type:"Heritage", icon:"🏰", lessExplored:true,
+                tags:["Palaces","Art","Food","Stories"],
+                description:"Discover painted heritage, old streets, stepwells and a slower side of Rajasthan beyond the biggest cities.",
+                search:"bundi rajasthan palace stepwell art culture food"
             },
-
             {
-                name: "Andaman Islands",
-                location: "Andaman & Nicobar",
-                type: "Adventure",
-                icon: "🤿",
-                description:
-                    "Explore tropical landscapes, beaches and water-based experiences across the islands."
+                name:"Majuli", location:"Assam", region:"Northeast",
+                type:"Culture", icon:"🌾", lessExplored:true,
+                tags:["Island","Crafts","Culture","Food"],
+                description:"Explore island life, crafts, cultural traditions, food and landscapes shaped by the Brahmaputra.",
+                search:"majuli assam island satra culture craft food"
             },
-
             {
-                name: "Darjeeling",
-                location: "West Bengal",
-                type: "Nature",
-                icon: "🏔️",
-                description:
-                    "Mountain scenery, tea gardens and Himalayan culture create a memorable slow-travel destination."
+                name:"Meghalaya", location:"Meghalaya", region:"Northeast",
+                type:"Nature", icon:"🌧️", lessExplored:true,
+                tags:["Waterfalls","Food","Stories","Nature"],
+                description:"Build a journey around living landscapes, local food, stories and community-linked experiences.",
+                search:"meghalaya waterfalls living root bridge food culture nature"
+            },
+            {
+                name:"Ziro", location:"Arunachal Pradesh", region:"Northeast",
+                type:"Culture", icon:"🌾", lessExplored:true,
+                tags:["Valley","Food","Culture","Music"],
+                description:"A valley journey centred on landscapes, local food, cultural traditions and creative community experiences.",
+                search:"ziro arunachal valley culture food music"
+            },
+            {
+                name:"Tawang", location:"Arunachal Pradesh", region:"Northeast",
+                type:"Nature", icon:"🏔️", lessExplored:true,
+                tags:["Mountains","Monastery","Stories","Food"],
+                description:"A Himalayan journey combining mountain landscapes, monastery heritage and regional cultural experiences.",
+                search:"tawang arunachal monastery mountains culture food"
+            },
+            {
+                name:"Konark", location:"Odisha", region:"East",
+                type:"Heritage", icon:"☀️", lessExplored:true,
+                tags:["Architecture","Art","Coast","Stories"],
+                description:"Connect monumental heritage with coastal landscapes, regional arts and the stories surrounding the place.",
+                search:"konark odisha sun temple architecture art coast"
+            },
+            {
+                name:"Bishnupur", location:"West Bengal", region:"East",
+                type:"Culture", icon:"🎨", lessExplored:true,
+                tags:["Terracotta","Music","Crafts","History"],
+                description:"Discover terracotta architecture, crafts, music traditions and the cultural character of a historic town.",
+                search:"bishnupur west bengal terracotta craft music temple"
+            },
+            {
+                name:"Dzukou Valley", location:"Nagaland", region:"Northeast",
+                type:"Adventure", icon:"🌄", lessExplored:true,
+                tags:["Hiking","Valley","Nature","Stories"],
+                description:"A nature-first journey around mountain landscapes, trekking and the wider cultural context of Nagaland.",
+                search:"dzukou valley nagaland trekking nature hills"
+            },
+            {
+                name:"Gokarna", location:"Karnataka", region:"West",
+                type:"Coast", icon:"🌊", lessExplored:true,
+                tags:["Coast","Food","Walks","Culture"],
+                description:"A slower coastal journey combining beaches, temple heritage, local food and walks between landscapes.",
+                search:"gokarna karnataka beach temple food coast"
             }
 
         ];
@@ -1387,12 +1442,12 @@
 
         function createPlaceCard(place) {
 
-            const card =
-                document.createElement("article");
+            const card = document.createElement("article");
+            card.className = "place-card";
 
-            card.className =
-                "place-card";
-
+            const tags = place.tags
+                .map(tag => `<span>${escapeHTML(tag)}</span>`)
+                .join("");
 
             card.innerHTML = `
 
@@ -1402,12 +1457,15 @@
                         ${place.icon}
                     </div>
 
+                    <span class="visual-region">
+                        ${escapeHTML(place.region)}
+                    </span>
+
                     <span class="visual-location">
                         ${escapeHTML(place.location)}
                     </span>
 
                 </div>
-
 
                 <div class="place-info">
 
@@ -1423,18 +1481,17 @@
                         ${escapeHTML(place.description)}
                     </p>
 
+                    <div class="experience-tags">
+                        ${tags}
+                    </div>
 
                     <div class="place-bottom">
 
                         <span class="place-meta">
-                            ✦
-                            Explore
+                            ${place.lessExplored ? "✦ Less explored" : "✦ Discover deeper"}
                         </span>
 
-                        <button
-                            class="plan-button"
-                            data-destination="${escapeHTML(place.name)}"
-                        >
+                        <button class="plan-button">
                             Plan this →
                         </button>
 
@@ -1443,27 +1500,13 @@
                 </div>
             `;
 
-
-            const button =
-                card.querySelector(".plan-button");
-
-
-            button.addEventListener(
+            card.querySelector(".plan-button").addEventListener(
                 "click",
-                () => {
-
-                    selectDestination(
-                        place.name
-                    );
-
-                }
+                () => selectDestination(place.name)
             );
 
-
             return card;
-
         }
-
 
         /* =====================================
            FILTER PLACES
@@ -1472,47 +1515,35 @@
         function filterPlaces() {
 
             const searchTerm =
-                searchInput.value
-                    .trim()
-                    .toLowerCase();
+                searchInput.value.trim().toLowerCase();
 
+            const filtered = places.filter((place) => {
 
-            const filtered =
-                places.filter((place) => {
+                const matchesFilter =
+                    activeFilter === "All" ||
+                    (activeFilter === "Less Explored" && place.lessExplored) ||
+                    place.type === activeFilter ||
+                    place.tags.includes(activeFilter);
 
-                    const matchesFilter =
-                        activeFilter === "All" ||
-                        place.type === activeFilter;
+                const searchableText = `
+                    ${place.name}
+                    ${place.location}
+                    ${place.region}
+                    ${place.type}
+                    ${place.description}
+                    ${place.tags.join(" ")}
+                    ${place.search}
+                `.toLowerCase();
 
+                const matchesSearch =
+                    !searchTerm ||
+                    searchableText.includes(searchTerm);
 
-                    const searchableText =
-                        `
-                        ${place.name}
-                        ${place.location}
-                        ${place.type}
-                        ${place.description}
-                        `.toLowerCase();
-
-
-                    const matchesSearch =
-                        !searchTerm ||
-                        searchableText.includes(
-                            searchTerm
-                        );
-
-
-                    return (
-                        matchesFilter &&
-                        matchesSearch
-                    );
-
-                });
-
+                return matchesFilter && matchesSearch;
+            });
 
             renderPlaces(filtered);
-
         }
-
 
         /* =====================================
            RENDER PLACES
@@ -1656,7 +1687,7 @@
             () => {
 
                 selectDestination(
-                    "Pondicherry"
+                    "Ooty"
                 );
 
             }
@@ -1673,4 +1704,3 @@
 
 </body>
 </html>
-
